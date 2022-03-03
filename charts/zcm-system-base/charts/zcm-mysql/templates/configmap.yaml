@@ -1,6 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ include "zcm-mysql.fullname" . }}
-data:
-  {{- (.Files.Glob "files/*").AsConfig | nindent 2 }}
