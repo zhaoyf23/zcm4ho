@@ -1,0 +1,80 @@
+# Default values for zcm-redis.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+fullnameOverride: zcm-redis
+
+replicaCount: 1
+
+restartPolicy: Always
+
+image:
+  repository: zcm9/redis
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: 3.2.12
+
+env:
+  - name: CLOUD_APP_NAME
+    value: paas_zcm-redis
+  - name: HOST_IP
+    valueFrom:
+      fieldRef:
+        fieldPath: status.hostIP
+  - name: POD_IP
+    valueFrom:
+      fieldRef:
+        fieldPath: status.podIP
+
+resources:
+  requests:
+    cpu: 0.5
+    memory: 512Mi
+  limits:
+    cpu: 4
+    memory: 4096Mi
+
+ports:
+  - containerPort: 6379
+    protocol: TCP
+    name: redisport
+
+volumeMounts:
+  - name: localtime
+    mountPath: /etc/localtime
+    readOnly: True
+  - name: zcm-timezone
+    mountPath: /etc/timezone
+    subPath: timezone
+    readOnly: True
+  - name: zlogs
+    mountPath: /tmp/zlogs
+    readOnly: False
+
+volumes:
+  - name: localtime
+    hostPath:
+      path: /etc/localtime
+  - name: zlogs
+    hostPath:
+      path: /tmp/zlogs
+
+cm:
+  - name: zcm-timezone
+    configMap:
+      name: zcm-timezone
+
+service:
+  type: ClusterIP
+  ports:
+    - name: redisport
+      port: 6379
+      protocol: TCP
+      targetPort: 6379
+
+dnsPolicy: ClusterFirst
+clusterIP: None
+
+secret:
+  redisrootpasswd: e2NpcGhlcn17cnNhfU1FcTJUZHhQV1RpelFWTUU1OTBOV3hNOWtNWlBPYVFZdlkrNG5UaSsxL3M9
+  type: Opaque

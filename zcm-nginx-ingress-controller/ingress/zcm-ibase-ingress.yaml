@@ -1,0 +1,256 @@
+#定义httpfiles,file-manaager配置
+# 定义zcm-portal ingress 配置
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: fixed-configuration
+  namespace: zcm9
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/proxy-body-size: "1024M"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/server-snippet: |
+      if ( $request_uri = "/" ) {
+          rewrite "/" $scheme://$http_host/portal/ permanent;
+      }
+      location ^~ /httpfiles/ {
+          alias /zcm/httpfiles/;
+          autoindex on;
+      }
+      location ^~ /zcm-file-manager/ {
+        if ( $request_uri ~* "/zcm-file-manager/\?ip=(.*)&port=(.*)&pid=(.*)" ) {
+          set $ip $1;
+          set $port $2;
+          set $fpid $3;
+        }
+        proxy_pass http://$ip:$port/files#/$fpid/root/;
+      }
+      location ^~ /zcm-file-manager/api/ {
+        if ( $request_uri ~* "/zcm-file-manager/api/(.*)\?ip=(.*)&port=(\d+)&pid=(\d+)$" ) {
+          set $fpath $2:$3/api/$1;
+        }
+        if ( $request_uri ~* "/zcm-file-manager/api/(.*)\?ip=(.*)&port=(\d+)&pid=(\d+)&(.*)" ) {
+          set $fpath $2:$3/api/$1?$5;
+        }
+        proxy_pass http://$fpath;
+      }
+spec:
+  tls:
+    - secretName: zcm-tls-secret
+  rules:
+    - http:
+        paths:
+          - path: /fixed-configuration
+            backend:
+              serviceName: fixed-configuration
+              servicePort: 8080
+
+---
+# 定义zcm-portal ingress 配置
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: zcm-portal
+  namespace: zcm9
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/proxy-body-size: "1024M"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/rewrite-target: /portal/$2
+    nginx.ingress.kubernetes.io/affinity: cookie
+    nginx.ingress.kubernetes.io/affinity-mode: persistent
+    nginx.ingress.kubernetes.io/session-cookie-path: /
+    nginx.ingress.kubernetes.io/session-cookie-name: ZCM_PORTAL_INGRESS_COOKIE
+    nginx.ingress.kubernetes.io/session-cookie-conditional-samesite-none: "true"
+spec:
+  tls:
+    - secretName: zcm-tls-secret
+  rules:
+    - http:
+        paths:
+          - path: /portal(/|$)(.*)
+            backend:
+              serviceName: zcm-portal
+              servicePort: 8080
+          - path: /portalqrcode/ws(/|$)(.*)
+            backend:
+              serviceName: zcm-portal
+              servicePort: 8080
+
+---
+#定义zcm-dingding配置
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: zcm-dingding
+  namespace: zcm9
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/proxy-body-size: "1024M"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/affinity: cookie
+    nginx.ingress.kubernetes.io/affinity-mode: persistent
+    nginx.ingress.kubernetes.io/session-cookie-path: /portal/zcm-dingding/
+    nginx.ingress.kubernetes.io/session-cookie-name: ZCM_DINGDING_INGRESS_COOKIE
+spec:
+  tls:
+    - secretName: zcm-tls-secret
+  rules:
+    - http:
+        paths:
+          - path: /portal/zcm-dingding(/|$)(.*)
+            backend:
+              serviceName: zcm-dingding
+              servicePort: 52801
+
+---
+#定义zcm-zcamp配置
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: zcm-zcamp
+  namespace: zcm9
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/proxy-body-size: "1024M"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/affinity: cookie
+    nginx.ingress.kubernetes.io/affinity-mode: persistent
+    nginx.ingress.kubernetes.io/session-cookie-path: /portal/zcamp/
+    nginx.ingress.kubernetes.io/session-cookie-name: ZCM_ZCAMP_INGRESS_COOKIE
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      rewrite /portal/zcamp/(.*)$ /appmgr-web/zcamp/$1 break;
+      rewrite /portal/zcampApi/(.*)$ /appmgr-web/$1 break;
+spec:
+  tls:
+    - secretName: zcm-tls-secret
+  rules:
+    - http:
+        paths:
+          - path: /portal/zcamp(/|$)(.*)
+            backend:
+              serviceName: zcm-zcamp
+              servicePort: 52860
+          - path: /portal/zcampApi(/|$)(.*)
+            backend:
+              serviceName: zcm-zcamp
+              servicePort: 52860
+
+---
+#定义zcm-ansible配置
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: zcm-ansible
+  namespace: zcm9
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/proxy-body-size: "1024M"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/session-cookie-path: /portal/zcm-zcamp-ansible/
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  tls:
+    - secretName: zcm-tls-secret
+  rules:
+    - http:
+        paths:
+          - path: /zcm-zcamp-ansible(/|$)(.*)
+            backend:
+              serviceName: zcm-ansible
+              servicePort: 52780
+
+---
+#定义zcm-zcamp-rest-server配置
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: zcm-zcamp-rest-server
+  namespace: zcm9
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/proxy-body-size: "1024M"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/session-cookie-path: /zcm-zcamp-ansible-rest-server/
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  tls:
+    - secretName: zcm-tls-secret
+  rules:
+    - http:
+        paths:
+          - path: /zcm-zcamp-ansible-rest-server(/|$)(.*)
+            backend:
+              serviceName: zcm-zcamp-rest-server
+              servicePort: 8081
+
+---
+#定义zcm-cmdb配置
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: zcm-cmdb
+  namespace: zcm9
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/proxy-body-size: "1024M"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/affinity: cookie
+    nginx.ingress.kubernetes.io/affinity-mode: persistent
+    nginx.ingress.kubernetes.io/session-cookie-path: /portal/zcm-cmdb/
+    nginx.ingress.kubernetes.io/session-cookie-name: ZCM_CMDB_INGRESS_COOKIE
+spec:
+  tls:
+    - secretName: zcm-tls-secret
+  rules:
+    - http:
+        paths:
+          - path: /portal/zcm-cmdb(/|$)(.*)
+            backend:
+              serviceName: zcm-cmdb
+              servicePort: 52835
+---
+# 定义zcm-service ingress 配置
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: zcm-internal-gateway
+  namespace: zcm9
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/proxy-body-size: "1024M"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      rewrite /(.*)$ /$1 break;
+spec:
+  tls:
+    - secretName: zcm-tls-secret
+  rules:
+    - http:
+        paths:
+          - path: /
+            backend:
+              serviceName: zcm-internal-gateway-deployment
+              servicePort: 52001
+          - path: /portal/ZDaaSManager
+            backend:
+              serviceName: zcm-internal-gateway-deployment
+              servicePort: 52001
+          - path: /portal/ZMQManager
+            backend:
+              serviceName: zcm-internal-gateway-deployment
+              servicePort: 52001
+          - path: /portal/ZcacheManager
+            backend:
+              serviceName: zcm-internal-gateway-deployment
+              servicePort: 52001

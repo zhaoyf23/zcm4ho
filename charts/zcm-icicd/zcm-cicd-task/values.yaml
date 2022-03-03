@@ -1,0 +1,158 @@
+# Default values for zcm-cicd-task.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+fullnameOverride: zcm-cicd-task
+
+replicaCount: 1
+
+restartPolicy: Always
+
+image:
+  repository: zcm9/zcm-cicd-task
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: D_20210805172524
+
+env:
+  - name: CLOUD_APP_NAME
+    value: paas_zcm-cicd-task
+  - name: APM_INIT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_APM_INIT
+  - name: ZCM_SERVER_VIP
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_SERVER_VIP
+  - name: ZCM_SERVER_SSL_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_SERVER_SSL_PORT
+  - name: ZCM_SERVER_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_SERVER_PORT
+  - name: ZCM_CICD_MYSQL_IP
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cicd
+        key: ZCM_CICD_MYSQL_IP
+  - name: ZCM_CICD_MYSQL_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cicd
+        key: ZCM_CICD_MYSQL_PORT
+  - name: ZCM_CICD_MYSQL_USER
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cicd
+        key: ZCM_CICD_MYSQL_USER
+  - name: ZCM_CICD_MYSQL_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: zcm-mysql
+        key: mysql-root-passwd
+  - name: ZCM_CICD_TASK_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cicd
+        key: ZCM_CICD_TASK_PORT
+  - name: ZCM_CICD_TASK_SSL_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cicd
+        key: ZCM_CICD_TASK_SSL_PORT
+  - name: ZCM_CICD_SERVER_IP
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_SERVER_VIP
+  - name: ZCM_REDIS_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_REDIS_PORT
+  - name: ZCM_REDIS_SERVER_LIST
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_REDIS_SERVER_LIST
+  - name: ZCM_REDIS_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        key: redis-root-passwd
+        name: zcm-redis
+
+resources:
+  requests:
+    cpu: 0.5
+    memory: 512Mi
+  limits:
+    cpu: 4
+    memory: 4096Mi
+
+ports:
+  - containerPort: 52487
+    protocol: TCP
+    name: http
+  - containerPort: 25487
+    protocol: TCP
+    name: https
+
+volumeMounts:
+  - name: localtime
+    mountPath: /etc/localtime
+    readOnly: True
+  - name: zcm-timezone
+    mountPath: /etc/timezone
+    subPath: timezone
+    readOnly: True
+  - name: properties
+    mountPath: /app/conf/application.properties
+    subPath: application.properties
+    readOnly: True
+  - name: zlogs
+    mountPath: /tmp/zlogs
+    readOnly: False
+  - name: data
+    mountPath: /root/data
+    readOnly: False
+
+volumes:
+  - name: localtime
+    hostPath:
+      path: /etc/localtime
+  - name: zlogs
+    hostPath:
+      path: /tmp/zlogs
+  - name: data
+    hostPath:
+      path: /zcm/zcm-cicd-task/data
+
+cm:
+  - name: properties
+    configMap:
+      name: zcm-cicd-task
+  - name: zcm-timezone
+    configMap:
+      name: zcm-timezone
+
+service:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 52487
+      protocol: TCP
+      targetPort: 52487
+    - name: https
+      port: 25487
+      protocol: TCP
+      targetPort: 25487
+
+dnsPolicy: ClusterFirst
+clusterIP: None

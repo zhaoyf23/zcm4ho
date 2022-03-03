@@ -1,0 +1,116 @@
+# 定义zcm-cicd ingress 配置
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: zcm-cicd
+  namespace: zcm9
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/proxy-body-size: "1024M"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/affinity: cookie
+    nginx.ingress.kubernetes.io/affinity-mode: persistent
+    nginx.ingress.kubernetes.io/session-cookie-name: ZCM_CICD_INGRESS_COOKIE
+    nginx.ingress.kubernetes.io/session-cookie-path: /portal/zcm-cicd/
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  tls:
+    - secretName: zcm-tls-secret
+  rules:
+    - http:
+        paths:
+          - path: /portal/zcm-cicd(/|$)(.*)
+            backend:
+              serviceName: zcm-cicd
+              servicePort: 52480
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/proxy-body-size: 1024M
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "1200"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "1200"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+  labels:
+    svc.prod.kubernetes.io/ingress: zcm-devspace
+  name: zcm-cloudtest
+  namespace: zcm9
+spec:
+  rules:
+  - http:
+      paths:
+      - backend:
+          serviceName: zcm-cloudtest
+          servicePort: 52890
+        path: /portal/zcm-cloudtest(/|$)(.*)
+  tls:
+  - secretName: zcm-tls-secret
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/proxy-body-size: 1024M
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "1200"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "1200"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+  name: zcm-devspace
+  namespace: zcm9
+spec:
+  rules:
+  - http:
+      paths:
+      - backend:
+          serviceName: zcm-devspace
+          servicePort: 52899
+        path: /portal/zcm-devspace(/|$)(.*)
+  tls:
+  - secretName: zcm-tls-secret
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/proxy-body-size: 1024M
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "1200"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "1200"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+  name: zcm-cos
+  namespace: zcm9
+spec:
+  rules:
+    - http:
+        paths:
+          - backend:
+              serviceName: minio
+              servicePort: 9001
+            path: /portal/zcm-cos-master(/|$)(.*)
+  tls:
+    - secretName: zcm-tls-secret
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/proxy-body-size: 1024M
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "1200"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "1200"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+  name: zcm-cos-slave
+  namespace: zcm9
+spec:
+  rules:
+    - http:
+        paths:
+          - backend:
+              serviceName: minio-2
+              servicePort: 9001
+            path: /portal/zcm-cos-slave(/|$)(.*)
+  tls:
+    - secretName: zcm-tls-secret

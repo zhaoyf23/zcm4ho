@@ -1,0 +1,266 @@
+# Default values for nms-monitor.
+# This is a YAML-formatted  file.
+# Declare variables to be passed into your templates.
+
+fullnameOverride: nms-monitor
+
+replicaCount: 1
+
+restartPolicy: Always
+
+image:
+  repository: zcm9/nms-monitor
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: C_20210629142140
+
+env:
+  - name: CLOUD_APP_NAME
+    value: paas_nms-monitor
+  - name: NMS_MONITOR_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-nms
+        key: NMS_MONITOR_PORT
+  - name: NMS_MONITOR_SSH_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-nms
+        key: NMS_MONITOR_SSH_PORT
+  - name: NMS_MONITOR_SSL_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-nms
+        key: NMS_MONITOR_SSL_PORT
+  - name: ZCM_SERVER_SSL_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_SERVER_SSL_PORT
+  - name: ZCM_DINGDING_SSL_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-nms
+        key: ZCM_DINGDING_SSL_PORT
+  - name: ZCM_REDIS_SERVER_LIST
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_REDIS_SERVER_LIST
+  - name: ZCM_MYSQL_VIP
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_MYSQL_VIP
+  - name: ZCM_MYSQL_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_MYSQL_PORT
+  - name: ZCM_MYSQL_USER
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_MYSQL_USER
+  - name: ZCM_MYSQL_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: zcm-mysql
+        key: mysql-root-passwd
+  - name: ZCM_SERVER_VIP
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_SERVER_VIP
+  - name: ZCM_SERVER_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_SERVER_PORT
+  - name: ZCM_DINGDING_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-nms
+        key: ZCM_DINGDING_PORT
+  - name: ZCM_REDIS_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_REDIS_PORT
+  - name: ZCM_REDIS_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: zcm-redis
+        key: redis-root-passwd
+  - name: NMS_INFLUXDB_VIP
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-nms
+        key: NMS_INFLUXDB_VIP
+  - name: NMS_INFLUXDB_PORT_8086
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-nms
+        key: NMS_INFLUXDB_PORT_8086
+  - name: NMS_KAPACITOR_VIP
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-nms
+        key: NMS_KAPACITOR_VIP
+  - name: NMS_KAPACITOR_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-nms
+        key: NMS_KAPACITOR_PORT
+  - name: NMS_MONITOR_SSH_VIP
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-nms
+        key: NMS_MONITOR_SSH_VIP
+  - name: NMS_ACTIVEMQ_VIP
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-nms
+        key: NMS_ACTIVEMQ_VIP
+  - name: NODE_IP_ADDR
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_SERVER_VIP
+  - name: PAAS_PLATFORM
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-nms
+        key: PAAS_PLATFORM
+  - name: NMS_INFLUXDB_MASTER_IP
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-nms
+        key: NMS_INFLUXDB_MASTER_IP
+  - name: NMS_INFLUXDB_SLAVE_IP
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-nms
+        key: NMS_INFLUXDB_SLAVE_IP
+  - name: NMS_ACTIVEMQ_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-nms
+        key: NMS_ACTIVEMQ_PORT
+  - name: APM_INIT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_APM_INIT
+  - name: NMS_ACTIVEMQ_WEB_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-nms
+        key: NMS_ACTIVEMQ_WEB_PORT
+  - name: NMS_MQ_NAMESERVER
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-nms
+        key: NMS_MQ_NAMESERVER
+  - name: NMS_MQ_CONSUMER
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-nms
+        key: NMS_MQ_CONSUMER
+  - name: HOST_IP
+    valueFrom:
+      fieldRef:
+        fieldPath: status.hostIP
+  - name: POD_IP
+    valueFrom:
+      fieldRef:
+        fieldPath: status.podIP
+
+resources:
+  requests:
+    cpu: 0.1
+    memory: 128Mi
+  limits:
+    cpu: 4
+    memory: 4096Mi
+
+ports:
+  - containerPort: 52022
+    protocol: TCP
+    name: http-ssh
+  - containerPort: 8580
+    protocol: TCP
+    name: http
+  - containerPort: 25580
+    protocol: TCP
+    name: https
+
+volumeMounts:
+  - name: localtime
+    mountPath: /etc/localtime
+    readOnly: True
+  - name: zcm-timezone
+    mountPath: /etc/timezone
+    subPath: timezone
+    readOnly: True
+  - name: properties
+    mountPath: /app/conf/monitorConfig.properties
+    subPath: monitorConfig.properties
+    readOnly: True
+  - name: node-exporter-config
+    mountPath: /app/prometheus
+    readOnly: False
+  - name: zlogs
+    mountPath: /tmp/zlogs
+    readOnly: False
+
+volumes:
+  - name: localtime
+    hostPath:
+      path: /etc/localtime
+  - name: zlogs
+    hostPath:
+      path: /tmp/zlogs
+  - name: node-exporter-config
+    hostPath:
+      path: /zcm/prometheus/targets
+
+cm:
+  - name: properties
+    configMap:
+      name: nms-monitor
+  - name: zcm-timezone
+    configMap:
+      name: zcm-timezone
+
+service:
+  type: ClusterIP
+  ports:
+    - name: http-ssh
+      port: 52022
+      protocol: TCP
+      targetPort: 52022
+    - name: http
+      port: 8580
+      protocol: TCP
+      targetPort: 8580
+    - name: https
+      port: 25580
+      protocol: TCP
+      targetPort: 25580
+  typeouter: NodePort
+  portsouter:
+    - name: http-ssh
+      port: 52022
+      protocol: TCP
+      targetPort: 52022
+      nodePort: 52022
+    - name: http
+      port: 8580
+      protocol: TCP
+      targetPort: 8580
+      nodePort: 52580
+
+dnsPolicy: ClusterFirst
+clusterIP: None
+

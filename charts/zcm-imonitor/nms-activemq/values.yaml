@@ -1,0 +1,90 @@
+# Default values for nms-activemq.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+fullnameOverride: nms-activemq
+
+replicaCount: 1
+
+restartPolicy: Always
+
+image:
+  repository: zcm9/nms-activemq
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: C_20210629141744
+
+env:
+  - name: CLOUD_APP_NAME
+    value: paas_nms-activemq
+  - name: HOST_IP
+    valueFrom:
+      fieldRef:
+        fieldPath: status.hostIP
+  - name: POD_IP
+    valueFrom:
+      fieldRef:
+        fieldPath: status.podIP
+
+resources:
+  requests:
+    cpu: 0.1
+    memory: 128Mi
+  limits:
+    cpu: 4
+    memory: 2048Mi
+
+ports:
+  - containerPort: 61616
+    protocol: TCP
+    name: http
+  - containerPort: 8161
+    protocol: TCP
+    name: http-web
+
+volumeMounts:
+  - name: localtime
+    mountPath: /etc/localtime
+    readOnly: True
+  - name: zcm-timezone
+    mountPath: /etc/timezone
+    subPath: timezone
+    readOnly: True
+  - name: zlogs
+    mountPath: /tmp/zlogs
+    readOnly: False
+
+volumes:
+  - name: localtime
+    hostPath:
+      path: /etc/localtime
+  - name: zlogs
+    hostPath:
+      path: /tmp/zlogs
+
+cm:
+  - name: zcm-timezone
+    configMap:
+      name: zcm-timezone
+
+service:
+  type: ClusterIP
+  ports:
+    - name: http-web
+      port: 8161
+      protocol: TCP
+      targetPort: 8161
+    - name: http
+      port: 61616
+      protocol: TCP
+      targetPort: 61616
+  typeouter: NodePort
+  portsouter:
+    - name: http
+      port: 61616
+      protocol: TCP
+      targetPort: 61616
+      nodePort: 52616
+
+dnsPolicy: ClusterFirst
+clusterIP: None

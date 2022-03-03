@@ -1,0 +1,208 @@
+# Default values for zcm-cicd.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+fullnameOverride: zcm-cicd
+
+replicaCount: 1
+
+restartPolicy: Always
+
+image:
+  repository: zcm9/zcm-cicd
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: C_20210527093825
+
+env:
+  - name: CLOUD_APP_NAME
+    value: paas_zcm-cicd
+  - name: APM_INIT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_APM_INIT
+  - name: ZCM_SERVER_VIP
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_SERVER_VIP
+  - name: ZCM_SERVER_SSL_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_SERVER_SSL_PORT
+  - name: ZCM_SERVER_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_SERVER_PORT
+  - name: ZCM_CICD_MYSQL_IP
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cicd
+        key: ZCM_CICD_MYSQL_IP
+  - name: ZCM_CICD_MYSQL_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cicd
+        key: ZCM_CICD_MYSQL_PORT
+  - name: ZCM_CICD_MYSQL_USER
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cicd
+        key: ZCM_CICD_MYSQL_USER
+  - name: ZCM_CICD_MYSQL_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: zcm-mysql
+        key: mysql-root-passwd
+  - name: ZCM_CICD_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cicd
+        key: ZCM_CICD_PORT
+  - name: ZCM_CICD_SSL_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cicd
+        key: ZCM_CICD_SSL_PORT
+  - name: ZCM_CICD_SERVER_IP
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_SERVER_VIP
+  - name: ZCM_REDIS_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_REDIS_PORT
+  - name: ZCM_REDIS_SERVER_LIST
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_REDIS_SERVER_LIST
+  - name: ZCM_REDIS_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        key: redis-root-passwd
+        name: zcm-redis
+  - name: ZCM_SAMBA_IP
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cicd
+        key: ZCM_SAMBA_IP
+  - name: ZCM_SAMBA_USER
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cicd
+        key: ZCM_SAMBA_USER
+  - name: ZCM_SAMBA_PASSWORD
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cicd
+        key: ZCM_SAMBA_PASSWORD
+  - name: CI_UPDATE_RETRY_FLAG
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cicd
+        key: CI_UPDATE_RETRY_FLAG
+  - name: CI_RUNNING_CHECK_FLAG
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cicd
+        key: CI_RUNNING_CHECK_FLAG
+  - name: CI_SCHEDULE_FLAG
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cicd
+        key: CI_SCHEDULE_FLAG
+  - name: CI_ZMP_TRANS_SCAN_FLAG
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cicd
+        key: CI_ZMP_TRANS_SCAN_FLAG
+  - name: NMS_INFLUXDB_RELAY_VIP
+    value: metrics.zsmart.com
+  - name: NMS_INFLUXDB_RELAY_PORT
+    value: "52000"
+  - name: ZCM_FILE_MANAGER_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cicd
+        key: ZCM_FILE_MANAGER_PORT
+
+resources:
+  requests:
+    cpu: 0.5
+    memory: 512Mi
+  limits:
+    cpu: 4
+    memory: 4096Mi
+
+ports:
+  - containerPort: 52480
+    protocol: TCP
+    name: http
+  - containerPort: 25480
+    protocol: TCP
+    name: https
+
+volumeMounts:
+  - name: localtime
+    mountPath: /etc/localtime
+    readOnly: True
+  - name: zcm-timezone
+    mountPath: /etc/timezone
+    subPath: timezone
+    readOnly: True
+  - name: properties
+    mountPath: /app/conf/application.properties
+    subPath: application.properties
+    readOnly: True
+  - name: zlogs
+    mountPath: /tmp/zlogs
+    readOnly: False
+  - name: data
+    mountPath: /root/data
+    readOnly: False
+  - name: codemerge
+    mountPath: /app/codemerge
+    readOnly: False
+
+volumes:
+  - name: localtime
+    hostPath:
+      path: /etc/localtime
+  - name: zlogs
+    hostPath:
+      path: /tmp/zlogs
+  - name: data
+    hostPath:
+      path: /zcm/zcm-cicd/data
+  - name: codemerge
+    hostPath:
+      path: /zcm/zcm-cicd/codemerge
+
+cm:
+  - name: properties
+    configMap:
+      name: zcm-cicd
+  - name: zcm-timezone
+    configMap:
+      name: zcm-timezone
+
+service:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 52480
+      protocol: TCP
+      targetPort: 52480
+    - name: https
+      port: 25480
+      protocol: TCP
+      targetPort: 25480
+
+dnsPolicy: ClusterFirst
+clusterIP: None

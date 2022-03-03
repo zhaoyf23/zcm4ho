@@ -1,0 +1,159 @@
+# Default values for zcm-cicd.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+fullnameOverride: zcm-cloudtest
+
+replicaCount: 1
+
+restartPolicy: Always
+
+nodeSelector:
+  zcm-cloudtest: zcm-cloudtest
+
+image:
+  repository: icicd/zcm-cloudtest
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: C_20211012095851
+
+env:
+  - name: CLOUD_APP_NAME
+    value: paas_zcm-cloudtest
+  - name: APM_INIT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_APM_INIT
+  - name: ZCM_SERVER_VIP
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_SERVER_VIP
+  - name: ZCM_SERVER_SSL_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_SERVER_SSL_PORT
+  - name: ZCM_SERVER_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_SERVER_PORT
+  - name: ZCM_MYSQL_VIP
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_MYSQL_VIP
+  - name: ZCM_MYSQL_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_MYSQL_PORT
+  - name: ZCM_MYSQL_USER
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_MYSQL_USER
+  - name: ZCM_MYSQL_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: zcm-mysql
+        key: mysql-root-passwd
+  - name: ZCM_CLOUDTEST_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cicd
+        key: ZCM_CLOUDTEST_PORT
+  - name: ZCM_CLOUDTEST_SSL_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cicd
+        key: ZCM_CLOUDTEST_SSL_PORT
+  - name: ZCM_REDIS_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_REDIS_PORT
+  - name: ZCM_REDIS_SERVER_LIST
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_REDIS_SERVER_LIST
+  - name: ZCM_REDIS_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        key: redis-root-passwd
+        name: zcm-redis
+  - name: FILE_MANAGER_PORT
+    value: "9554"
+
+
+resources:
+  requests:
+    cpu: 0.5
+    memory: 512Mi
+  limits:
+    cpu: 4
+    memory: 4096Mi
+
+ports:
+  - containerPort: 52890
+    protocol: TCP
+    name: http
+  - containerPort: 25890
+    protocol: TCP
+    name: https
+
+volumeMounts:
+  - name: localtime
+    mountPath: /etc/localtime
+    readOnly: True
+  - name: zcm-timezone
+    mountPath: /etc/timezone
+    subPath: timezone
+    readOnly: True
+  - name: properties
+    mountPath: /app/conf/application.properties
+    subPath: application.properties
+    readOnly: True
+  - name: zlogs
+    mountPath: /tmp/zlogs
+    readOnly: False
+  - name: data
+    mountPath: /tmp/upload
+    readOnly: False
+
+volumes:
+  - name: localtime
+    hostPath:
+      path: /etc/localtime
+  - name: zlogs
+    hostPath:
+      path: /tmp/zlogs
+  - name: data
+    hostPath:
+      path: /zcmdata/zcm-cloudtest
+
+cm:
+  - name: properties
+    configMap:
+      name: zcm-cloudtest
+  - name: zcm-timezone
+    configMap:
+      name: zcm-timezone
+
+service:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 52890
+      protocol: TCP
+      targetPort: 52890
+    - name: https
+      port: 25890
+      protocol: TCP
+      targetPort: 25890
+
+dnsPolicy: ClusterFirst
+clusterIP: None

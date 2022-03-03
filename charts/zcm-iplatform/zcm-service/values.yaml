@@ -1,0 +1,160 @@
+# Default values for zcm-service.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+fullnameOverride: zcm-service
+
+replicaCount: 1
+
+restartPolicy: Always
+
+image:
+  repository: zcm9/zcm-service
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: C_20210527093741
+
+env:
+  - name: CLOUD_APP_NAME
+    value: paas_zcm-service
+  - name: ZCM_MYSQL_VIP
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_MYSQL_VIP
+  - name: ZCM_MYSQL_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_MYSQL_PORT
+  - name: ZCM_MYSQL_USER
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_MYSQL_USER
+  - name: ZCM_MYSQL_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        key: mysql-root-passwd
+        name: zcm-mysql
+  - name: ZCM_SERVER_VIP
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_SERVER_VIP
+  - name: ZCM_SERVER_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_SERVER_PORT
+  - name: ZCM_GATEWAY_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cluster
+        key: ZCM_GATEWAY_PORT
+  - name: ZCM_SERVICE_SSL_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cluster
+        key: ZCM_SERVICE_SSL_PORT
+  - name: ZCM_GATEWAY_SSL_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cluster
+        key: ZCM_GATEWAY_SSL_PORT
+  - name: ZCM_HARBOR_PROJECT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_HARBOR_PROJECT
+  - name: ZCM_SERVICE_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cluster
+        key: ZCM_SERVICE_PORT
+  - name: ZCM_REDIS_SERVER_LIST
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cluster
+        key: ZCM_REDIS_SERVER_LIST
+  - name: ZCM_REDIS_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        key: redis-root-passwd
+        name: zcm-redis
+  - name: APM_INIT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_APM_INIT
+  - name: HOST_IP
+    valueFrom:
+      fieldRef:
+        fieldPath: status.hostIP
+  - name: POD_IP
+    valueFrom:
+      fieldRef:
+        fieldPath: status.podIP
+
+resources:
+  requests:
+    cpu: 0.1
+    memory: 512Mi
+  limits:
+    cpu: 4
+    memory: 4096Mi
+
+ports:
+  - containerPort: 52680
+    protocol: TCP
+    name: http
+  - containerPort: 25680
+    protocol: TCP
+    name: https
+
+volumeMounts:
+  - name: localtime
+    mountPath: /etc/localtime
+    readOnly: True
+  - name: zcm-timezone
+    mountPath: /etc/timezone
+    subPath: timezone
+    readOnly: True
+  - name: properties
+    mountPath: /app/conf/application.properties
+    subPath: application.properties
+    readOnly: True
+  - name: zlogs
+    mountPath: /tmp/zlogs
+    readOnly: False
+
+volumes:
+  - name: localtime
+    hostPath:
+      path: /etc/localtime
+  - name: zlogs
+    hostPath:
+      path: /tmp/zlogs
+
+cm:
+  - name: properties
+    configMap:
+      name: zcm-service
+  - name: zcm-timezone
+    configMap:
+      name: zcm-timezone
+
+service:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 52680
+      protocol: TCP
+      targetPort: 52680
+    - name: https
+      port: 25680
+      protocol: TCP
+      targetPort: 25680
+
+dnsPolicy: ClusterFirst
+clusterIP: None

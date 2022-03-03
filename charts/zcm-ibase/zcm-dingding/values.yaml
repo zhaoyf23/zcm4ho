@@ -1,0 +1,161 @@
+# Default values for zcm-dingding.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+fullnameOverride: zcm-dingding
+
+replicaCount: 1
+
+restartPolicy: Always
+
+image:
+  repository: zcm9/zcm-dingding
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: C_20210527093744
+
+env:
+  - name: CLOUD_APP_NAME
+    value: paas_zcm-dingding
+  - name: APM_INIT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_APM_INIT
+  - name: ZCM_CICD_MYSQL_IP
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_MYSQL_VIP
+  - name: ZCM_CICD_MYSQL_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_MYSQL_PORT
+  - name: ZCM_CICD_MYSQL_USER
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_MYSQL_USER
+  - name: ZCM_CICD_MYSQL_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        key: mysql-root-passwd
+        name: zcm-mysql
+  - name: ZCM_DINGDING_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-nms
+        key: ZCM_DINGDING_PORT
+  - name: ZCM_DINGDING_SSL_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-nms
+        key: ZCM_DINGDING_SSL_PORT
+  - name: ZCM_SERVER_VIP
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_SERVER_VIP
+  - name: ZCM_SERVER_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_SERVER_PORT
+  - name: ZCM_REDIS_SERVER_LIST
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_REDIS_SERVER_LIST
+  - name: ZCM_REDIS_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        key: redis-root-passwd
+        name: zcm-redis
+  - name: ZCM_ZCIP_SERVER_IP
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cicd
+        key: ZCM_ZCIP_SERVER_IP
+  - name: ZCM_ZCIP_SERVER_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cicd
+        key: ZCM_ZCIP_SERVER_PORT
+  - name: PROXY_FLAG
+    value: "N"
+  - name: PROXY_HOST
+    value: ""
+  - name: PROXY_PORT
+    value: ""
+  - name: HOST_IP
+    valueFrom:
+      fieldRef:
+        fieldPath: status.hostIP
+  - name: POD_IP
+    valueFrom:
+      fieldRef:
+        fieldPath: status.podIP
+
+resources:
+  requests:
+    cpu: 0.1
+    memory: 512Mi
+  limits:
+    cpu: 4
+    memory: 4096Mi
+
+ports:
+  - containerPort: 52801
+    protocol: TCP
+    name: http
+  - containerPort: 25801
+    protocol: TCP
+    name: https
+
+volumeMounts:
+  - name: localtime
+    mountPath: /etc/localtime
+    readOnly: True
+  - name: zcm-timezone
+    mountPath: /etc/timezone
+    subPath: timezone
+    readOnly: True
+  - name: properties
+    mountPath: /root/conf/application.properties
+    subPath: application.properties
+    readOnly: True
+  - name: zlogs
+    mountPath: /tmp/zlogs
+    readOnly: False
+
+volumes:
+  - name: localtime
+    hostPath:
+      path: /etc/localtime
+  - name: zlogs
+    hostPath:
+      path: /tmp/zlogs
+
+cm:
+  - name: properties
+    configMap:
+      name: zcm-dingding
+  - name: zcm-timezone
+    configMap:
+      name: zcm-timezone
+
+service:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 52801
+      protocol: TCP
+      targetPort: 8081
+    - name: https
+      port: 25801
+      protocol: TCP
+      targetPort: 22
+
+dnsPolicy: ClusterFirst
+clusterIP: None

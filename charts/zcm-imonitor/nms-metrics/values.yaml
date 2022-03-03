@@ -1,0 +1,170 @@
+# Default values for nms-metrics.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+fullnameOverride: nms-metrics
+
+replicaCount: 1
+
+restartPolicy: Always
+
+image:
+  repository: zcm9/nms-metrics
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: C_20210629141831
+
+env:
+  - name: CLOUD_APP_NAME
+    value: paas_nms-metrics
+  - name: NMS_METRICS_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-nms
+        key: NMS_METRICS_PORT
+  - name: NMS_METRICS_SSL_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-nms
+        key: NMS_METRICS_SSL_PORT
+  - name: APM_INIT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_APM_INIT
+  - name: NMS_INFLUXDB_VIP
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-nms
+        key: NMS_INFLUXDB_VIP
+  - name: NMS_INFLUXDB_PORT_8086
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-nms
+        key: NMS_INFLUXDB_PORT_8086
+  - name: ZCM_REDIS_SERVER_LIST
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_REDIS_SERVER_LIST
+  - name: ZCM_MYSQL_VIP
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_MYSQL_VIP
+  - name: ZCM_MYSQL_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_MYSQL_PORT
+  - name: ZCM_MYSQL_USER
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_MYSQL_USER
+  - name: ZCM_MYSQL_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: zcm-mysql
+        key: mysql-root-passwd
+  - name: ZCM_SERVER_VIP
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_SERVER_VIP
+  - name: ZCM_SERVER_SSL_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_SERVER_SSL_PORT
+  - name: ZCM_REDIS_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_REDIS_PORT
+  - name: ZCM_REDIS_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: zcm-redis
+        key: redis-root-passwd
+  - name: NMS_METRICS_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-nms
+        key: NMS_METRICS_PORT
+  - name: ZCM_SERVER_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_SERVER_PORT
+  - name: HOST_IP
+    valueFrom:
+      fieldRef:
+        fieldPath: status.hostIP
+  - name: POD_IP
+    valueFrom:
+      fieldRef:
+        fieldPath: status.podIP
+
+resources:
+  requests:
+    cpu: 0.1
+    memory: 128Mi
+  limits:
+    cpu: 4
+    memory: 4096Mi
+
+ports:
+  - containerPort: 25503
+    protocol: TCP
+    name: https
+  - containerPort: 8788
+    protocol: TCP
+    name: http
+
+volumeMounts:
+  - name: localtime
+    mountPath: /etc/localtime
+    readOnly: True
+  - name: zcm-timezone
+    mountPath: /etc/timezone
+    subPath: timezone
+    readOnly: True
+  - name: zlogs
+    mountPath: /tmp/zlogs
+    readOnly: False
+  - name: properties
+    mountPath: /app/conf/metricsConfig.properties
+    subPath: metricsConfig.properties
+    readOnly: False
+
+volumes:
+  - name: localtime
+    hostPath:
+      path: /etc/localtime
+  - name: zlogs
+    hostPath:
+      path: /tmp/zlogs
+
+cm:
+  - name: properties
+    configMap:
+      name: nms-metrics
+  - name: zcm-timezone
+    configMap:
+      name: zcm-timezone
+
+service:
+  type: ClusterIP
+  ports:
+    - name: https
+      port: 25503
+      protocol: TCP
+      targetPort: 25503
+    - name: http
+      port: 8788
+      protocol: TCP
+      targetPort: 8788
+
+dnsPolicy: ClusterFirst
+clusterIP: None

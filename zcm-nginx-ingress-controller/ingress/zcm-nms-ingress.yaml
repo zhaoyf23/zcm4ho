@@ -1,0 +1,136 @@
+# 定义nms-metrics ingress 配置
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: nms-metrics
+  namespace: zcm9
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/proxy-body-size: "1024M"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/affinity: cookie
+    nginx.ingress.kubernetes.io/affinity-mode: persistent
+    nginx.ingress.kubernetes.io/session-cookie-name: ZCM_METRICS_INGRESS_COOKIE
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      rewrite /collectd-post/(.*)$   /datasources/collectd/$1 break;
+      rewrite /query/(.*)$   /query/$1 break;
+      rewrite /ping/(.*)$   /ping/$1 break;
+      rewrite /write/(.*)$   /write/$1 break;
+      rewrite /zcm-metrics/(.*)$   /$1 break;
+spec:
+  tls:
+    - secretName: zcm-tls-secret
+  rules:
+    - http:
+        paths:
+          - path: /write
+            backend:
+              serviceName: nms-metrics
+              servicePort: 8788
+          - path: /ping
+            backend:
+              serviceName: nms-metrics
+              servicePort: 8788
+          - path: /query
+            backend:
+              serviceName: nms-metrics
+              servicePort: 8788
+          - path: /zcm-metrics/
+            backend:
+              serviceName: nms-metrics
+              servicePort: 8788
+          - path: /collectd-post
+            backend:
+              serviceName: nms-metrics
+              servicePort: 8788
+---
+# 定义nms-grafana ingress 配置
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: nms-grafana
+  namespace: zcm9
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/proxy-body-size: "1024M"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/affinity: cookie
+    nginx.ingress.kubernetes.io/affinity-mode: persistent
+    nginx.ingress.kubernetes.io/session-cookie-name: ZCM_GRAFANA_INGRESS_COOKIE
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      rewrite /zcm_grafpub_oracle/grafana/(.*)$ /grafana/$1 break;
+      rewrite /zcm-grafana/(.*)$   /$1 break;
+      rewrite /zcm-grafpub/(.*)$   /$1 break;
+spec:
+  tls:
+    - secretName: zcm-tls-secret
+  rules:
+    - http:
+        paths:
+          - path: /zcm-grafpub/grafana/
+            backend:
+              serviceName: nms-grafana
+              servicePort: 9999
+          - path: /zcm-grafpub/
+            backend:
+              serviceName: nms-grafana
+              servicePort: 3001
+          - path: /zcm-grafana/
+            backend:
+              serviceName: nms-grafana
+              servicePort: 3000
+---
+# 定义nms-monitor ingress 配置
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: nms-monitor
+  namespace: zcm9
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/proxy-body-size: "1024M"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/affinity: cookie
+    nginx.ingress.kubernetes.io/affinity-mode: persistent
+    nginx.ingress.kubernetes.io/session-cookie-name: ZCM_MONITOR_INGRESS_COOKIE
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  tls:
+    - secretName: zcm-tls-secret
+  rules:
+    - http:
+        paths:
+          - path: /portal/zcm-monitor(/|$)(.*)
+            backend:
+              serviceName: nms-monitor
+              servicePort: 8580
+---
+# 定义zcm-dialing ingress配置
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: zcm-dialing
+  namespace: zcm9
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/proxy-body-size: "1024M"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/affinity: cookie
+    nginx.ingress.kubernetes.io/affinity-mode: persistent
+    nginx.ingress.kubernetes.io/session-cookie-name: ZCM_DIALING_INGRESS_COOKIE
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  tls:
+    - secretName: zcm-tls-secret
+  rules:
+    - http:
+        paths:
+          - path: /portal/zcm-dialing(/|$)(.*)
+            backend:
+              serviceName: zcm-dialing
+              servicePort: 52636
+

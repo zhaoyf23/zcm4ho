@@ -1,0 +1,27 @@
+# 定义短链接服务 配置
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: internal-service-m
+  namespace: zcm9
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/proxy-body-size: "1024M"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/rewrite-target: /m/$2
+    nginx.ingress.kubernetes.io/affinity: cookie
+    nginx.ingress.kubernetes.io/affinity-mode: persistent
+    nginx.ingress.kubernetes.io/session-cookie-path: /
+    nginx.ingress.kubernetes.io/session-cookie-name: ZCM_INTERNAL_SERVICE_M_INGRESS_COOKIE
+    nginx.ingress.kubernetes.io/session-cookie-conditional-samesite-none: "true"
+spec:
+  tls:
+    - secretName: zcm-tls-secret
+  rules:
+    - http:
+        paths:
+          - path: /m(/|$)(.*)
+            backend:
+              serviceName: zcm-internal-gateway-deployment
+              servicePort: 52000

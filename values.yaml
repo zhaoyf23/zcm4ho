@@ -1,0 +1,70 @@
+global:
+  repository: europe-west2-docker.pkg.dev/ho-dev-env-337400
+  nodeSelector:
+    cloud.google.com/gke-nodepool: oss-zcm-pool
+zcm-nginx:
+  image:
+    tag: C_20210927190244
+zcm-dingding:
+  image:
+    tag: C_20210927190314
+zcm-midware-yum:
+  image:
+    tag: C_20210927190247
+zcm-portal:
+  image:
+    tag: C_20211105155538
+mysql:
+  image:
+    tag: 5.7.31
+redis:
+  image:
+    tag: 3.2.12
+zcm-zcamp:
+  image:
+    tag: C_20211118105617
+zcm-zcamp-rest-server:
+  image:
+    tag: C_20211104090515
+zcm-ansible:
+  image:
+    tag: C_20210927191848
+zcm-cmdb:
+  image:
+    tag: C_20220216170829
+openjdk_java8_ci_mysql:
+  image:
+    tag: C_20211015134311
+zcm-tool:
+  image:
+    tag: C_20211028150413
+zcm-application:
+  image:
+    tag: C_20211115154538
+zcm-gateway:
+  image:
+    tag: C_20211118102816
+zcm-service:
+  image:
+    tag: C_20211111105147
+zcm-resource:
+  image:
+    tag: C_20211029102106
+zcm-git:
+  image:
+    tag: C_20210927190322
+zcm-image:
+  image:
+    tag: C_20211109154331
+zcm-ssc:
+  image:
+    tag: C_20211206141043
+zcm-openresty:
+  image:
+    tag: 20191205_1.15.8.2_java
+zcm-file-manager:
+  image:
+    tag: C_20210927190435
+zcm-health-keeper:
+  image:
+    tag: C_20210927190240

@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "zcm-redis.fullname" . }}
+  labels:
+    {{- include "zcm-redis.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "zcm-redis.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "zcm-redis.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - env:
+          {{ toYaml .Values.env | nindent 10 }}
+          - name: DOCKER_IMAGE
+            value: {{ include "zcm-redis.fullimage" . }}
+          name: {{ .Chart.Name }}
+          image: {{ include "zcm-redis.fullimage" . }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            {{- toYaml .Values.ports | nindent 12 }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            {{- range .Values.volumeMounts }}
+            - name: {{ .name }}
+              mountPath: {{ .mountPath }}
+              subPath: {{ .subPath }}
+              readOnly: {{ .readOnly }}
+            {{- end }}
+          command: [ "redis-server", "/data/conf/redis.conf", "--requirepass", "abc@123A" ]
+      dnsPolicy: {{ .Values.dnsPolicy }}
+      {{- with .Values.global.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      restartPolicy: {{ .Values.restartPolicy }}
+      volumes:
+        {{- range .Values.volumes }}
+        - name: {{ .name }}
+          hostPath:
+            {{- toYaml .hostPath | nindent 12 }}
+        {{- end }}
+        {{- range .Values.cm }}
+        - name: {{ .name }}
+          configMap:
+            {{- toYaml .configMap | nindent 12 }}
+        {{- end }}

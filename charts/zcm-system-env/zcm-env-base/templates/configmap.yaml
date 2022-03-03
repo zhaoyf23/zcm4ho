@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "zcm-env-base.fullname" . }}
+data:
+  LOG_LEVEL_PROFILE: test
+  ZCM_API_GATEWAY: http://ingress-nginx.zcm9:52000
+  ZCM_APM_INIT: http://ingress-nginx.zcm9:52000/httpfiles/itracing/apm.sh
+  ZCM_CMDB_PORT: "52835"
+  ZCM_CMDB_SSL_PORT: "25835"
+  ZCM_DOMAIN: .zcm9.svc.cluster.local
+  ZCM_HARBOR: 10.45.80.82:52800
+  ZCM_HARBOR_PROJECT: zcm9
+  ZCM_MYSQL_PORT: "3306"
+  ZCM_MYSQL_USER: root
+  ZCM_MYSQL_VIP: 10.62.64.3
+  ZCM_NGINX_PORT: "52000"
+  ZCM_NGINX_SSL_PORT: "25000"
+  ZCM_PORTAL_PORT: "52060"
+  ZCM_PORTAL_SSL_PORT: "25060"
+  ZCM_REDIS_PORT: "6379"
+  ZCM_REDIS_SERVER_LIST: zcm-redis:6379
+  ZCM_REST_SERVER_PORT: "8781"
+  ZCM_SERVER_PORT: "52000"
+  ZCM_SERVER_SSL_PORT: "25000"
+  ZCM_SERVER_VIP: ingress-nginx.zcm9
+  ZCM_TOOL_BASTION_DATABASE_PORT: "52021"
+  ZCM_TOOL_BASTION_SERVER_PORT: "52020"
+  ZCM_TOOL_PORT: "52981"
+  ZCM_TOOL_SSL_PORT: "25981"
+  ZCM_ZCAMP_ANSIBLE_SERVER_PORT: "52780"
+  ZCM_ZCAMP_ANSIBLE_SERVER_SSL_PORT: "25780"
+  ZCM_ZCAMP_REST_SERVER_PORT: "52876"
+  ZCM_ZCAMP_REST_SERVER_SSH_PORT: "52912"
+  ZCM_ZCAMP_SERVER_IP: ingress-nginx.zcm9
+  ZCM_ZCAMP_SERVER_PORT: "52860"
+  ZCM_ZCAMP_SSL_PORT: "25860"
+  ZCM_MIDWARE_ZCACHE_REST: "http://172.16.17.145:8301/api/syncZCacheCluster/"
+  ZCM_MIDWARE_ZMQ_REST: "http://172.16.17.145:8601/api/syncZmqCluster/"
+  ZCM_MIDWARE_ZDAAS_REST: "http://172.16.17.145:8901/api/syncZdaasCluster/"
+  PORTAL_JDBC_URL: "jdbc:mysql://10.62.64.3:3306/zcm_portal_9?zeroDateTimeBehavior=convertToNull&allowMultiQueries=true"
+  ANSIBLE_JDBC_URL: "10.62.64.3:3306:zcm_zcamp"
+  ZCAMP_JDBC_URL: "jdbc:mysql://10.62.64.3:3306/zcm_zcamp"
+  ZCM_MIDDLE_MANAGER_DB: "jdbc:mysql://10.62.64.3:3306/zcm_middleware"

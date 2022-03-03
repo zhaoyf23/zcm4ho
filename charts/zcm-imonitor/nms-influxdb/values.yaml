@@ -1,0 +1,109 @@
+# Default values for nms-influxdb.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+fullnameOverride: nms-influxdb
+
+replicaCount: 1
+
+restartPolicy: Always
+
+image:
+  repository: zcm9/nms-influxdb
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: C_20210629153639-1.7.3
+
+env:
+  - name: CLOUD_APP_NAME
+    value: paas_nms-influxdb
+  - name: INFLUXDB_DATA_INDEX_VERSION
+    value: "tsi1"
+  - name: INFLUXDB_BIND_ADDRESS
+    value: ":8088"
+  - name: INFLUXDB_HTTP_LOG_ENABLED
+    value: "false"
+  - name: INFLUXDB_DATA_MAX_SERIES_PER_DATABASE
+    value: "10000000"
+  - name: INFLUXDB_HTTP_MAX_ROW_LIMIT
+    value: "10000"
+  - name: INFLUXDB_REPORTING_DISABLED
+    value: "true"
+  - name: HOST_IP
+    valueFrom:
+      fieldRef:
+        fieldPath: status.hostIP
+  - name: POD_IP
+    valueFrom:
+      fieldRef:
+        fieldPath: status.podIP
+
+resources:
+  requests:
+    cpu: 0.1
+    memory: 128Mi
+  limits:
+    cpu: 4
+    memory: 8192Mi
+
+ports:
+  - containerPort: 8086
+    protocol: TCP
+    name: http-data
+  - containerPort: 8088
+    protocol: TCP
+    name: http
+
+volumeMounts:
+  - name: localtime
+    mountPath: /etc/localtime
+    readOnly: True
+  - name: zcm-timezone
+    mountPath: /etc/timezone
+    subPath: timezone
+    readOnly: True
+  - name: zlogs
+    mountPath: /tmp/zlogs
+    readOnly: False
+  - name: influxdb
+    mountPath: /var/lib/influxdb
+    readOnly: False
+
+volumes:
+  - name: localtime
+    hostPath:
+      path: /etc/localtime
+  - name: zlogs
+    hostPath:
+      path: /tmp/zlogs
+  - name: influxdb
+    hostPath:
+      path: /zpaasssd/zcm/influxdata
+
+cm:
+  - name: zcm-timezone
+    configMap:
+      name: zcm-timezone
+
+service:
+  type: ClusterIP
+  ports:
+    - name: http-data
+      port: 8086
+      protocol: TCP
+      targetPort: 8086
+    - name: http
+      port: 8088
+      protocol: TCP
+      targetPort: 8088
+  typeouter: NodePort
+  portsouter:
+    - name: http-data
+      port: 8086
+      protocol: TCP
+      targetPort: 8086
+      nodePort: 52586
+
+
+dnsPolicy: ClusterFirst
+clusterIP: None

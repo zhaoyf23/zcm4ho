@@ -1,0 +1,14 @@
+# Headless service for zcm-redis.
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "zcm-redis.fullname" . }}
+  labels:
+    {{- include "zcm-redis.labels" . | nindent 4 }}
+spec:
+  clusterIP: {{ .Values.clusterIP }}
+  type: {{ .Values.service.type }}
+  ports:
+    {{- toYaml .Values.service.ports | nindent 4 }}
+  selector:
+    {{- include "zcm-redis.selectorLabels" . | nindent 4 }}

@@ -1,0 +1,96 @@
+# Default values for zcm-mysql.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+fullnameOverride: zcm-mysql
+
+replicaCount: 0
+
+restartPolicy: Always
+
+nodeSelector:
+  db: mysql-master
+
+image:
+  repository: zcm9/mysql
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: 5.7.31
+
+env:
+  - name: CLOUD_APP_NAME
+    value: paas_zcm-mysql
+  - name: MYSQL_ROOT_PASSWORD
+    value: "abc@123A"
+  - name: HOST_IP
+    valueFrom:
+      fieldRef:
+        fieldPath: status.hostIP
+  - name: POD_IP
+    valueFrom:
+      fieldRef:
+        fieldPath: status.podIP
+
+resources: {}
+
+ports:
+  - containerPort: 3306
+    protocol: TCP
+    name: http
+
+volumeMounts:
+  - mountPath: /zpaasssd/zcm/mysql
+    name: data
+  - mountPath: /etc/mysql/my.cnf
+    name: zcm-mysql
+    subPath: my.cnf
+  - mountPath: /etc/localtime
+    name: localtime
+    readOnly: true
+  - mountPath: /etc/timezone
+    name: zcm-timezone
+    readOnly: true
+    subPath: timezone
+  - mountPath: /tmp/zlogs
+    name: zlogs
+
+volumes:
+  - name: localtime
+    hostPath:
+      path: /etc/localtime
+  - name: zlogs
+    hostPath:
+      path: /tmp/zlogs
+  - name: data
+    hostPath:
+      path: /zpaasssd/zcm/mysql
+
+cm:
+  - name: zcm-mysql
+    configMap:
+      name: zcm-mysql
+  - name: zcm-timezone
+    configMap:
+      name: zcm-timezone
+
+service:
+  type: ClusterIP
+  ports:
+    - name: mysql
+      port: 52306
+      protocol: TCP
+      targetPort: 3306
+  typeouter: NodePort
+  portsouter:
+    - name: mysql
+      port: 52306
+      protocol: TCP
+      targetPort: 3306
+      nodePort: 52306
+
+dnsPolicy: ClusterFirst
+clusterIP: None
+
+secret:
+  mysqlrootpasswd: e2NpcGhlcn17cnNhfWpMYXJoWVVNWWdZdlliWUFkcXFyeE8yYU10K0ZKMjRqRkhWODJCZ2RvWjA9
+  type: Opaque

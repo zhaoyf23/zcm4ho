@@ -1,0 +1,28 @@
+# Headless service for zcm-nexus.
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "zcm-nexus.fullname" . }}
+  labels:
+    {{- include "zcm-nexus.labels" . | nindent 4 }}
+spec:
+  clusterIP: {{ .Values.clusterIP }}
+  type: {{ .Values.service.type }}
+  ports:
+    {{- toYaml .Values.service.ports | nindent 4 }}
+  selector:
+    {{- include "zcm-nexus.selectorLabels" . | nindent 4 }}
+---
+# Client service for zcm-nexus.
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "zcm-nexus.fullname" . }}-outer
+  labels:
+    {{- include "zcm-nexus.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.typeouter }}
+  ports:
+    {{- toYaml .Values.service.portsouter | nindent 4 }}
+  selector:
+    {{- include "zcm-nexus.selectorLabels" . | nindent 4 }}
