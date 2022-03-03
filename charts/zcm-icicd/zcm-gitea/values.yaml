@@ -1,0 +1,86 @@
+# Default values for zcm-gitea.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+fullnameOverride: zcm-gitea
+
+replicaCount: 1
+
+restartPolicy: Always
+
+nodeSelector:
+  zcm-gitea: zcm-gitea
+
+
+image:
+  repository: zcm9/zcm-gitea
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: C_20210527093714
+
+env:
+  - name: USER
+    value: root
+  - name: ZCM_SERVER_VIP
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_SERVER_VIP
+  - name: ZCM_SERVER_SSL_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_SERVER_SSL_PORT
+  - name: ZCM_SERVER_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_SERVER_PORT
+
+ports: 
+  - containerPort: 3000
+    protocol: TCP
+    name: http
+
+volumeMounts:
+  - name: localtime
+    mountPath: /etc/localtime
+    readOnly: True
+  - name: data
+    mountPath: /data
+    readOnly: False
+  - name: app
+    mountPath: /data/gitea/conf/app.ini
+    subPath: app.ini
+    readOnly: True
+    
+volumes:
+  - name: localtime
+    hostPath:
+      path: /etc/localtime
+  - name: data
+    hostPath:
+      path: /var/gitea
+
+cm:
+  - name: app
+    configMap:
+      name: zcm-gitea
+
+service: 
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 52490
+      protocol: TCP
+      targetPort: 3000
+  typeouter: NodePort
+  portsouter:
+    - name: http
+      port: 52490
+      protocol: TCP
+      targetPort: 3000
+      nodePort: 52490
+
+dnsPolicy: ClusterFirst
+clusterIP: None

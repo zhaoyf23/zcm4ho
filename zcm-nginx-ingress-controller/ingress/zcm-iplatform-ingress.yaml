@@ -1,0 +1,245 @@
+# 定义zcm-application ingress 配置
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: zcm-application
+  namespace: zcm9
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/proxy-body-size: "1024M"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/affinity: cookie
+    nginx.ingress.kubernetes.io/affinity-mode: persistent
+    nginx.ingress.kubernetes.io/session-cookie-name: ZCM_APPLICATION_INGRESS_COOKIE
+    nginx.ingress.kubernetes.io/session-cookie-path: /portal/zcm-application/
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  tls:
+    - secretName: zcm-tls-secret
+  rules:
+    - http:
+        paths:
+          - path: /portal/zcm-application(/|$)(.*)
+            backend:
+              serviceName: zcm-application
+              servicePort: 52380
+
+---
+# 定义zcm-baas ingress 配置
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: zcm-baas
+  namespace: zcm9
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/proxy-body-size: "1024M"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/affinity: cookie
+    nginx.ingress.kubernetes.io/affinity-mode: persistent
+    nginx.ingress.kubernetes.io/session-cookie-name: ZCM_BAAS_INGRESS_COOKIE
+    nginx.ingress.kubernetes.io/session-cookie-path: /portal/zcm-baas/
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  tls:
+    - secretName: zcm-tls-secret
+  rules:
+    - http:
+        paths:
+          - path: /portal/zcm-baas(/|$)(.*)
+            backend:
+              serviceName: zcm-baas
+              servicePort: 52802
+
+---
+
+# 定义zcm-image ingress 配置
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: zcm-image
+  namespace: zcm9
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/proxy-body-size: "1024M"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/upstream-hash-by: $host$request_uri
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  tls:
+    - secretName: zcm-tls-secret
+  rules:
+    - http:
+        paths:
+          - path: /portal/zcm-image(/|$)(.*)
+            backend:
+              serviceName: zcm-image
+              servicePort: 52280
+
+---
+# 定义zcm-resource ingress 配置
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: zcm-resource
+  namespace: zcm9
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/proxy-body-size: "1024M"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/affinity: cookie
+    nginx.ingress.kubernetes.io/affinity-mode: persistent
+    nginx.ingress.kubernetes.io/session-cookie-name: ZCM_RESOURCE_INGRESS_COOKIE
+    nginx.ingress.kubernetes.io/session-cookie-path: /portal/zcm-resource/
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  tls:
+    - secretName: zcm-tls-secret
+  rules:
+    - http:
+        paths:
+          - path: /portal/zcm-resource(/|$)(.*)
+            backend:
+              serviceName: zcm-resource
+              servicePort: 52180
+
+---
+# 定义zcm-service ingress 配置
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: zcm-service
+  namespace: zcm9
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/proxy-body-size: "1024M"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/affinity: cookie
+    nginx.ingress.kubernetes.io/affinity-mode: persistent
+    nginx.ingress.kubernetes.io/session-cookie-path: /portal/zcm-service/
+    nginx.ingress.kubernetes.io/session-cookie-name: ZCM_SERVICE_INGRESS_COOKIE
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  tls:
+    - secretName: zcm-tls-secret
+  rules:
+    - http:
+        paths:
+          - path: /portal/zcm-service(/|$)(.*)
+            backend:
+              serviceName: zcm-service
+              servicePort: 52680
+
+---
+# 定义zcm-ssc ingress 配置
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: zcm-ssc
+  namespace: zcm9
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/proxy-body-size: "1024M"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/affinity: cookie
+    nginx.ingress.kubernetes.io/affinity-mode: persistent
+    nginx.ingress.kubernetes.io/session-cookie-path: /portal/zcm-ssc/
+    nginx.ingress.kubernetes.io/session-cookie-name: ZCM_SSC_INGRESS_COOKIE
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  tls:
+    - secretName: zcm-tls-secret
+  rules:
+    - http:
+        paths:
+          - path: /portal/zcm-ssc(/|$)(.*)
+            backend:
+              serviceName: zcm-ssc
+              servicePort: 52805
+          - path: /portal/zcm-okupgrade/(/|$)(.*)
+            backend:
+              serviceName: zcm-ssc
+              servicePort: 52805
+
+---
+# 定义zcm-tool ingress 配置
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: zcm-tool
+  namespace: zcm9
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/proxy-body-size: "1024M"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/affinity: cookie
+    nginx.ingress.kubernetes.io/affinity-mode: persistent
+    nginx.ingress.kubernetes.io/session-cookie-path: /portal/zcm-tool/
+    nginx.ingress.kubernetes.io/session-cookie-name: ZCM_TOOL_INGRESS_COOKIE
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  tls:
+    - secretName: zcm-tls-secret
+  rules:
+    - http:
+        paths:
+          - path: /portal/zcm-tool(/|$)(.*)
+            backend:
+              serviceName: zcm-tool
+              servicePort: 52981
+---
+# 定义zcm-tool ingress 配置
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: zcm-crms
+  namespace: zcm9
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/proxy-body-size: "1024M"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/affinity: cookie
+    nginx.ingress.kubernetes.io/affinity-mode: persistent
+    nginx.ingress.kubernetes.io/session-cookie-path: /portal/zcm-crms/
+    nginx.ingress.kubernetes.io/session-cookie-name: ZCM_CRMS_INGRESS_COOKIE
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  tls:
+    - secretName: zcm-tls-secret
+  rules:
+    - http:
+        paths:
+          - path: /portal/zcm-crms(/|$)(.*)
+            backend:
+              serviceName: zcm-crms
+              servicePort: 52880
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/proxy-body-size: 1024M
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+  name: zcm-doc
+  namespace: zcm9
+spec:
+  rules:
+  - http:
+      paths:
+      - backend:
+          serviceName: zcm-doc
+          servicePort: 52803
+        path: /portal/zcm-doc(/|$)(.*)
+  tls:
+  - secretName: zcm-tls-secret

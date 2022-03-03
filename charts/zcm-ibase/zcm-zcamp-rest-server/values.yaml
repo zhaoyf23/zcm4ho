@@ -1,0 +1,96 @@
+# Default values for zcm-zcamp-rest-server.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+fullnameOverride: zcm-zcamp-rest-server
+
+replicaCount: 1
+
+restartPolicy: Always
+
+image:
+  repository: zcm9/zcm-zcamp-rest-server
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: C_20210527093729
+
+env:
+  - name: LANG
+    value: en_US.UTF-8
+  - name: HOST_IP
+    value: zcm-zcamp-rest-server
+  - name: ANSIBLE_JDBC_URL
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ANSIBLE_JDBC_URL
+  - name: ANSIBLE_JDBC_USR
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_MYSQL_USER
+  - name: ANSIBLE_JDBC_PASS
+    valueFrom:
+      secretKeyRef:
+        key: mysql-root-passwd
+        name: zcm-mysql
+  - name: OPEN_LOG_OBJECT_TYPE
+    value: ALL
+  - name: HOST_IP
+    valueFrom:
+      fieldRef:
+        fieldPath: status.hostIP
+  - name: POD_IP
+    valueFrom:
+      fieldRef:
+        fieldPath: status.podIP
+
+resources:
+  requests:
+    cpu: 0.1
+    memory: 512Mi
+  limits:
+    cpu: 4
+    memory: 4096Mi
+
+ports:
+  - containerPort: 8081
+    protocol: TCP
+    name: http
+  - containerPort: 22
+    protocol: TCP
+    name: ssh
+
+volumeMounts:
+  - name: localtime
+    mountPath: /etc/localtime
+    readOnly: True
+  - name: zcm-timezone
+    mountPath: /etc/timezone
+    subPath: timezone
+    readOnly: True
+
+volumes:
+  - name: localtime
+    hostPath:
+      path: /etc/localtime
+
+cm:
+  - name: zcm-timezone
+    configMap:
+      name: zcm-timezone
+
+service:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 8081
+      protocol: TCP
+      targetPort: 8081
+    - name: ssh
+      port: 52912
+      protocol: TCP
+      targetPort: 22
+
+dnsPolicy: ClusterFirst
+clusterIP: None

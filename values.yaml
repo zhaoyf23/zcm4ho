@@ -1,0 +1,52 @@
+global:
+  repository: europe-west2-docker.pkg.dev/wct-oss-dev
+  nodeSelector:
+    cloud.google.com/gke-nodepool: zcm-pool
+zcm-dingding:
+  image:
+    tag: C_20210927190314
+zcm-midware-yum:
+  image:
+    tag: C_20210927190247
+zcm-portal:
+  image:
+    tag: C_20211105155538
+mysql:
+  image:
+    tag: 5.7.31
+redis:
+  image:
+    tag: 3.2.12
+zcm-zcamp:
+  image:
+    tag: C_20211026110807
+zcm-zcamp-rest-server:
+  image:
+    tag: C_20210927190259
+zcm-ansible:
+  image:
+    tag: C_20210927191848
+zcm-cmdb:
+  image:
+    tag: C_20211110113039
+zcm-tool:
+  image:
+    tag: D_20211022093018
+zcm-application:
+  image:
+    tag: C_20211125153827
+zcm-gateway:
+  image:
+    tag: C_20211111104349
+zcm-service:
+  image:
+    tag: C_20211111105147
+zcm-resource:
+  image:
+    tag: C_20211014194552
+zcm-image:
+  image:
+    tag: C_20211109154331
+zcm-ssc:
+  image:
+    tag: C_20211025142438

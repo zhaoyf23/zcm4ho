@@ -1,0 +1,91 @@
+# Default values for zcm-midware-yum.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+fullnameOverride: zcm-midware-yum
+
+replicaCount: 1
+
+restartPolicy: Always
+
+image:
+  repository: zcm9/zcm-midware-yum
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: C_20210322105832
+
+env:
+  - name: LANG
+    value: en_US.UTF-8
+  - name: CLOUD_APP_NAME
+    value: paas_zcm-midware-yum
+  - name: HOST_IP
+    valueFrom:
+      fieldRef:
+        fieldPath: status.hostIP
+  - name: POD_IP
+    valueFrom:
+      fieldRef:
+        fieldPath: status.podIP
+
+resources:
+  requests:
+    cpu: 0.1
+    memory: 512Mi
+  limits:
+    cpu: 4
+    memory: 4096Mi
+
+ports:
+  - containerPort: 88
+    protocol: TCP
+    name: http
+
+volumeMounts:
+  - name: localtime
+    mountPath: /etc/localtime
+    readOnly: True
+  - name: zcm-timezone
+    mountPath: /etc/timezone
+    subPath: timezone
+    readOnly: True
+  - name: collectd
+    mountPath: /root/collectd
+    readOnly: False
+  - name: supervisord
+    mountPath: /root/supervisord
+    readOnly: False
+  - name: repos
+    mountPath: /usr/local/yum
+    readOnly: False
+
+volumes:
+  - name: localtime
+    hostPath:
+      path: /etc/localtime
+  - name: collectd
+    hostPath:
+      path: /root/collectd
+  - name: supervisord
+    hostPath:
+      path: /root/supervisord
+  - name: repos
+    hostPath:
+      path: /repos
+
+cm:
+  - name: zcm-timezone
+    configMap:
+      name: zcm-timezone
+
+service:
+  type: NodePort
+  ports:
+    - name: http
+      port: 52861
+      protocol: TCP
+      targetPort: 88
+      nodePort: 52861
+
+dnsPolicy: ClusterFirst
+clusterIP: None

@@ -1,0 +1,185 @@
+# Default values for zcm-application.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+restartPolicy: Always
+
+image:
+  repository: zcm9/zcm-application
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: latest
+
+env:
+  - name: CLOUD_APP_NAME
+    value: paas_zcm-application
+  - name: ZCM_MYSQL_VIP
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_MYSQL_VIP
+  - name: ZCM_MYSQL_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_MYSQL_PORT
+  - name: ZCM_MYSQL_USER
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_MYSQL_USER
+  - name: ZCM_MYSQL_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        key: mysql-root-passwd
+        name: zcm-mysql
+  - name: ZCM_APPLICATION_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cluster
+        key: ZCM_APPLICATION_PORT
+  - name: ZCM_SERVER_VIP
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_SERVER_VIP
+  - name: ZCM_SERVER_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_SERVER_PORT
+  - name: ZCM_REDIS_SERVER_LIST
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cluster
+        key: ZCM_REDIS_SERVER_LIST
+  - name: ZCM_CONFIG_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cluster
+        key: ZCM_CONFIG_PORT
+  - name: ZCM_FILE_MANAGER_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cluster
+        key: ZCM_FILE_MANAGER_PORT
+  - name: ZCM_REDIS_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        key: redis-root-passwd
+        name: zcm-redis
+  - name: ZCM_ELASTICSEARCH_URL
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cluster
+        key: ZCM_ELASTICSEARCH_URL
+  - name: APM_INIT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_APM_INIT
+  - name: ZCM_PINPOINT_URL
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cluster
+        key: ZCM_PINPOINT_URL
+  - name: ZCM_OCS_TEST_URL
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cluster
+        key: ZCM_OCS_TEST_URL
+  - name: ZCM_OCS_LAYOUT_URL
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cluster
+        key: ZCM_OCS_LAYOUT_URL
+  - name: ZCM_SERVER_SSL_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_SERVER_SSL_PORT
+  - name: ZCM_APPLICATION_SSL_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cluster
+        key: ZCM_APPLICATION_SSL_PORT
+  - name: HOST_IP
+    valueFrom:
+      fieldRef:
+        fieldPath: status.hostIP
+  - name: POD_IP
+    valueFrom:
+      fieldRef:
+        fieldPath: status.podIP
+
+resources:
+  requests:
+    cpu: 0.1
+    memory: 512Mi
+  limits:
+    cpu: 4
+    memory: 4096Mi
+
+ports:
+  - containerPort: 52380
+    protocol: TCP
+    name: http
+  - containerPort: 25380
+    protocol: TCP
+    name: https
+
+volumeMounts:
+  - name: localtime
+    mountPath: /etc/localtime
+    readOnly: True
+  - name: zcm-timezone
+    mountPath: /etc/timezone
+    subPath: timezone
+    readOnly: True
+  - name: properties
+    mountPath: /zcm/zcm-application/application.properties
+    subPath: application.properties
+    readOnly: True
+  - name: zlogs
+    mountPath: /tmp/zlogs
+    readOnly: False
+  - name: kubeconfig
+    mountPath: /app/k8scerts/cluster_k8s-slb/config
+    subPath: config
+    readOnly: True
+
+volumes:
+  - name: localtime
+    hostPath:
+      path: /etc/localtime
+  - name: zlogs
+    hostPath:
+      path: /tmp/zlogs
+
+cm:
+  - name: properties
+    configMap:
+      name: zcm-application
+  - name: zcm-timezone
+    configMap:
+      name: zcm-timezone
+  - name: kubeconfig
+    configMap:
+      name: zcm-k8s-kubeconfig
+
+service:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 52380
+      protocol: TCP
+      targetPort: 52380
+    - name: https
+      port: 25380
+      protocol: TCP
+      targetPort: 25380
+
+dnsPolicy: ClusterFirst
+clusterIP: None

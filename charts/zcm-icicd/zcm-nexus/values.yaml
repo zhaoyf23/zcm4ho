@@ -1,0 +1,82 @@
+# Default values for zcm-nexus.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+fullnameOverride: zcm-nexus
+
+replicaCount: 1
+
+restartPolicy: Always
+
+nodeSelector:
+  zcm-nexus: zcm-nexus
+
+
+image:
+  repository: zcm9/zcm-nexus3
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "3.30.0"
+
+env:
+  - name: USER
+    value: root
+  - name: ZCM_SERVER_VIP
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_SERVER_VIP
+  - name: ZCM_SERVER_SSL_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_SERVER_SSL_PORT
+  - name: ZCM_SERVER_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_SERVER_PORT
+
+ports: 
+  - containerPort: 8081
+    protocol: TCP
+    name: http
+
+volumeMounts:
+  - name: localtime
+    mountPath: /etc/localtime
+    readOnly: True
+  - name: nexus
+    mountPath: /nexus-data
+    readOnly: False
+    
+volumes:
+  - name: localtime
+    hostPath:
+      path: /etc/localtime
+  - name: nexus
+    hostPath:
+      path: /nexus/data
+
+cm:
+  - name: zcm-timezone
+    configMap:
+      name: zcm-timezone
+
+service: 
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 52493
+      protocol: TCP
+      targetPort: 8081
+  typeouter: NodePort
+  portsouter:
+    - name: http
+      port: 52493
+      protocol: TCP
+      targetPort: 8081
+      nodePort: 52493
+
+dnsPolicy: ClusterFirst
+clusterIP: None

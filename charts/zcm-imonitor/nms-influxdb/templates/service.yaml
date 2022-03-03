@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "zcm-tpl.fullname" . }}
+  labels:
+    {{- include "zcm-tpl.labels" . | nindent 4 }}
+spec:
+  clusterIP: {{ .Values.clusterIP }}
+  type: {{ .Values.service.type }}
+  ports:
+    {{- toYaml .Values.service.ports | nindent 4 }}
+  selector:
+    {{- include "zcm-tpl.selectorLabels" . | nindent 4 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "zcm-tpl.fullname" . }}-outer
+  labels:
+    {{- include "zcm-tpl.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.typeouter }}
+  ports:
+    {{- toYaml .Values.service.portsouter | nindent 4 }}
+  selector:
+    {{- include "zcm-tpl.selectorLabels" . | nindent 4 }}

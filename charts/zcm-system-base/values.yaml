@@ -1,0 +1,10 @@
+# Default values for zcm-base.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+global:
+  repository: 10.45.80.1
+  namespace: zcm9
+  nodeSelector:
+    aik: zcm9
+  architecture: ha

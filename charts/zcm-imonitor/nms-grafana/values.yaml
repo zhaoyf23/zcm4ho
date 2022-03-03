@@ -1,0 +1,143 @@
+# Default values for nms-grafana.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates
+
+fullnameOverride: nms-grafana
+
+replicaCount: 1
+
+restartPolicy: Always
+
+image:
+  repository: zcm9/nms-grafana
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: C_20210629141928-7.2.1
+
+env:
+  - name: CLOUD_APP_NAME
+    value: paas_nms-grafana
+  - name: INFLUXDB
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-nms
+        key: NMS_INFLUXDB_URL
+  - name: ZCM_MYSQL_VIP
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_MYSQL_VIP
+  - name: ZCM_MYSQL_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_MYSQL_PORT
+  - name: ZCM_MYSQL_USER
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_MYSQL_USER
+  - name: ZCM_MYSQL_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: zcm-mysql
+        key: mysql-root-passwd
+  - name: DATABASE_HOST
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-nms
+        key: DATABASE_HOST
+  - name: GRAFANA_DS_NAME
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-nms
+        key: GRAFANA_DS_NAME
+  - name: GRAFANA_NAME
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_MYSQL_USER
+  - name: GRAFANA_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: zcm-mysql
+        key: mysql-root-passwd
+  - name: HOST_IP
+    valueFrom:
+      fieldRef:
+        fieldPath: status.hostIP
+  - name: POD_IP
+    valueFrom:
+      fieldRef:
+        fieldPath: status.podIP
+
+resources:
+  requests:
+    cpu: 0.1
+    memory: 128Mi
+  limits:
+    cpu: 4
+    memory: 4096Mi
+
+ports:
+  - containerPort: 3000
+    protocol: TCP
+    name: http-pri
+  - containerPort: 3001
+    protocol: TCP
+    name: http-pub
+  - containerPort: 8089
+    protocol: TCP
+    name: http-timeshift
+  - containerPort: 9999
+    protocol: TCP
+    name: http-oracle
+
+volumeMounts:
+  - name: localtime
+    mountPath: /etc/localtime
+    readOnly: True
+  - name: zcm-timezone
+    mountPath: /etc/timezone
+    subPath: timezone
+    readOnly: True
+  - name: zlogs
+    mountPath: /tmp/zlogs
+    readOnly: False
+
+volumes:
+  - name: localtime
+    hostPath:
+      path: /etc/localtime
+  - name: zlogs
+    hostPath:
+      path: /tmp/zlogs
+
+cm:
+  - name: zcm-timezone
+    configMap:
+      name: zcm-timezone
+
+service:
+  type: ClusterIP
+  ports:
+    - name: http-pri
+      port: 3000
+      protocol: TCP
+      targetPort: 3000
+    - name: http-pub
+      port: 3001
+      protocol: TCP
+      targetPort: 3001
+    - name: http-timeshift
+      port: 8089
+      protocol: TCP
+      targetPort: 8089
+    - name: http-oracle
+      port: 9999
+      protocol: TCP
+      targetPort: 9999
+
+
+dnsPolicy: ClusterFirst
+clusterIP: None

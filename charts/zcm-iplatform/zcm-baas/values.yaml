@@ -1,0 +1,163 @@
+# Default values for zcm-baas.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+fullnameOverride: zcm-baas
+
+replicaCount: 0
+
+restartPolicy: Always
+
+image:
+  repository: zcm9/zcm-baas
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: C_20210527093743
+
+env:
+  - name: CLOUD_APP_NAME
+    value: paas_zcm-baas
+  - name: ZCM_MYSQL_VIP
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_MYSQL_VIP
+  - name: ZCM_MYSQL_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_MYSQL_PORT
+  - name: ZCM_MYSQL_USER
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_MYSQL_USER
+  - name: ZCM_MYSQL_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        key: mysql-root-passwd
+        name: zcm-mysql
+  - name: ZCM_BAAS_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cluster
+        key: ZCM_BAAS_PORT
+  - name: ZCM_BAAS_SSL_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cluster
+        key: ZCM_BAAS_SSL_PORT
+  - name: ZCM_SERVER_VIP
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_SERVER_VIP
+  - name: ZCM_SERVER_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_SERVER_PORT
+  - name: APM_INIT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_APM_INIT
+  - name: ZCM_REDIS_SERVER_LIST
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cluster
+        key: ZCM_REDIS_SERVER_LIST
+  - name: ZCM_REDIS_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        key: redis-root-passwd
+        name: zcm-redis
+  - name: ZCM_BAAS_DNS_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cluster
+        key: ZCM_BAAS_DNS_PORT
+  - name: HOST_IP
+    valueFrom:
+      fieldRef:
+        fieldPath: status.hostIP
+  - name: POD_IP
+    valueFrom:
+      fieldRef:
+        fieldPath: status.podIP
+
+resources:
+  requests:
+    cpu: 0.1
+    memory: 512Mi
+  limits:
+    cpu: 4
+    memory: 4096Mi
+
+ports:
+  - containerPort: 52802
+    protocol: TCP
+    name: http
+  - containerPort: 25802
+    protocol: TCP
+    name: https
+  - containerPort: 52053
+    protocol: TCP
+    name: dnsport
+
+volumeMounts:
+  - name: localtime
+    mountPath: /etc/localtime
+    readOnly: True
+  - name: zcm-timezone
+    mountPath: /etc/timezone
+    subPath: timezone
+    readOnly: True
+  - name: properties
+    mountPath: /root/conf/application.properties
+    subPath: application.properties
+    readOnly: True
+  - name: zlogs
+    mountPath: /tmp/zlogs
+    readOnly: False
+  - name: data
+    mountPath: /root/data
+    readOnly: False
+
+volumes:
+  - name: localtime
+    hostPath:
+      path: /etc/localtime
+  - name: zlogs
+    hostPath:
+      path: /tmp/zlogs
+  - name: data
+    hostPath:
+      path: /zcm/zcm-baas/data
+
+cm:
+  - name: properties
+    configMap:
+      name: zcm-baas
+  - name: zcm-timezone
+    configMap:
+      name: zcm-timezone
+
+service:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 52802
+      protocol: TCP
+      targetPort: 52802
+    - name: https
+      port: 25802
+      protocol: TCP
+      targetPort: 25802
+    - name: dnsport
+      port: 52053
+      protocol: TCP
+      targetPort: 52053
+
+dnsPolicy: ClusterFirst
+clusterIP: None

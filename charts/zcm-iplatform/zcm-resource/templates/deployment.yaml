@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "zcm-tpl.fullname" . }}
+  labels:
+    {{- include "zcm-tpl.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "zcm-tpl.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "zcm-tpl.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - env:
+          {{ toYaml .Values.env | nindent 10 }}
+          - name: DOCKER_IMAGE
+            value: {{ include "zcm-tpl.fullimage" . }}
+          name: {{ .Chart.Name }}
+          image: {{ include "zcm-tpl.fullimage" . }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            {{- toYaml .Values.ports | nindent 12 }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            {{- range .Values.volumeMounts }}
+            - name: {{ .name }}
+              mountPath: {{ .mountPath }}
+              subPath: {{ .subPath }}
+              readOnly: {{ .readOnly }}
+            {{- end }}
+          livenessProbe:
+            exec:
+              command:
+                - docker-entrypoint.sh
+                - liveness
+            failureThreshold: 5
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          readinessProbe:
+            exec:
+              command:
+                - docker-entrypoint.sh
+                - readiness
+            failureThreshold: 5
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+      dnsPolicy: {{ .Values.dnsPolicy }}
+      {{- with .Values.global.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      restartPolicy: {{ .Values.restartPolicy }}
+      volumes:
+        {{- range .Values.volumes }}
+        - name: {{ .name }}
+          hostPath:
+            {{- toYaml .hostPath | nindent 12 }}
+        {{- end }}
+        {{- range .Values.cm }}
+        - name: {{ .name }}
+          configMap:
+            {{- toYaml .configMap | nindent 12 }}
+        {{- end }}

@@ -1,0 +1,183 @@
+# Default values for zcm-cmdb.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+fullnameOverride: zcm-cmdb
+
+replicaCount: 1
+
+restartPolicy: Always
+
+image:
+  repository: zcm9/zcm-cmdb
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: C_20210608142548
+
+env:
+  - name: CLOUD_APP_NAME
+    value: paas_zcm-cmdb
+  - name: APM_INIT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_APM_INIT
+  - name: ZCM_SERVER_VIP
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_SERVER_VIP
+  - name: ZCM_SERVER_SSL_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_SERVER_SSL_PORT
+  - name: ZCM_SERVER_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_SERVER_PORT
+  - name: ZCM_CMDB_MYSQL_IP
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_MYSQL_VIP
+  - name: ZCM_CMDB_MYSQL_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_MYSQL_PORT
+  - name: SQL_LIMIT
+    value: "2000"
+  - name: CMDB_SERVER_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_CMDB_PORT
+  - name: ZCM_CMDB_HTTPS_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_CMDB_SSL_PORT
+  - name: ZCAMP_CMDB_DB_USERNAME
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_MYSQL_USER
+  - name: ZCAMP_CMDB_DB_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        key: mysql-root-passwd
+        name: zcm-mysql
+  - name: SERVER_SSH_PORT
+    value: "22"
+  - name: REDIS_NAMESPACE
+    value: zcm-portal
+  - name: ZCM_REDIS_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_REDIS_PORT
+  - name: CACHE_SERVER_LIST
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_REDIS_SERVER_LIST
+  - name: CACHE_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        key: redis-root-passwd
+        name: zcm-redis
+  - name: GATEWAY_INI_SOURCE
+    value: "${ZCM_SERVER_VIP}:${ZCM_SERVER_PORT}/httpfiles/gateway-ini/zcm-nginx-gateway.ini"
+  - name: ZCM_HARBOR_PROJECT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-base
+        key: ZCM_HARBOR_PROJECT
+  - name: ZCM_SERVER_LIST
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cluster
+        key: ZCM_SERVER_LIST
+  - name: ZCM_GATEWAY_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cluster
+        key: ZCM_GATEWAY_PORT
+  - name: ZCM_GATEWAY_SSL_PORT
+    valueFrom:
+      configMapKeyRef:
+        name: zcm-env-cluster
+        key: ZCM_GATEWAY_SSL_PORT
+  - name: HOST_IP
+    valueFrom:
+      fieldRef:
+        fieldPath: status.hostIP
+  - name: POD_IP
+    valueFrom:
+      fieldRef:
+        fieldPath: status.podIP
+
+resources:
+  requests:
+    cpu: 0.1
+    memory: 512Mi
+  limits:
+    cpu: 4
+    memory: 4096Mi
+
+ports:
+  - containerPort: 52835
+    protocol: TCP
+    name: http
+  - containerPort: 25835
+    protocol: TCP
+    name: https
+
+volumeMounts:
+  - name: localtime
+    mountPath: /etc/localtime
+    readOnly: True
+  - name: zcm-timezone
+    mountPath: /etc/timezone
+    subPath: timezone
+    readOnly: True
+  - name: properties
+    mountPath: /app/conf/application.properties
+    subPath: application.properties
+    readOnly: True
+  - name: zlogs
+    mountPath: /tmp/zlogs
+    readOnly: False
+
+volumes:
+  - name: localtime
+    hostPath:
+      path: /etc/localtime
+  - name: zlogs
+    hostPath:
+      path: /tmp/zlogs
+
+cm:
+  - name: properties
+    configMap:
+      name: zcm-cmdb
+  - name: zcm-timezone
+    configMap:
+      name: zcm-timezone
+
+service:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 52835
+      protocol: TCP
+      targetPort: 52835
+    - name: https
+      port: 25835
+      protocol: TCP
+      targetPort: 25835
+
+dnsPolicy: ClusterFirst
+clusterIP: None

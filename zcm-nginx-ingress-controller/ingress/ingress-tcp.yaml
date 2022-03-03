@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tcp-services
+  namespace: zcm9
+data:
+  9994: "zcm9/itracing-collector:9994"
+  9995: "zcm9/itracing-collector:9995"
+  9996: "zcm9/itracing-collector:9996"
+  52020: zcm9/zcm-tool:52020
+  52021: zcm9/zcm-tool:52021
+  52981: zcm9/zcm-tool:52981
