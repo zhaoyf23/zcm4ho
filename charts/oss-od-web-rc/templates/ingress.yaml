@@ -11,7 +11,7 @@ metadata:
     kubernetes.io/ingress.class: "nginx"
     nginx.ingress.kubernetes.io/proxy-body-size: "1024M"
     nginx.ingress.kubernetes.io/configuration-snippet: |
-      {{- range .Values.ingress.annotations }}
+      {{- range .Values.ingress.annotations }}z
       {{- toYaml .rewritePath | nindent 6 }}
       {{- end }}
 spec:
@@ -22,7 +22,7 @@ spec:
         {{- range .Values.ingress.path }}
         - backend:
             serviceName: {{ $fullName }}
-            servicePort: {{ .Values.service.port }}
+            servicePort: {{ $svcPort }}
           path: {{ .externalPath }}
         {{- end }}
   {{- end }}
