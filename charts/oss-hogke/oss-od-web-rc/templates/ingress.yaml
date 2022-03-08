@@ -18,7 +18,7 @@ spec:
         paths:
         {{- range .Values.ingress.path }}
         - backend:
-            serviceName: {{ include "zcm-tpl.fullname" . }}
+            serviceName: {{ include "zcm-tpl.name" . }}
             servicePort: {{ .Values.service.port }}
           path: {{ .externalPath }}
         {{- end }}
