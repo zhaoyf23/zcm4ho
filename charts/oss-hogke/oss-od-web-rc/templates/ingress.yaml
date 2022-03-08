@@ -1,10 +1,10 @@
 {{- if .Values.ingress.enabled -}}
-  {{- $fullName := include "zcm-tpl.fullname" . -}}
+  {{- $fullName := include "zcm-tpl.name" . -}}
   {{- $svcPort := .Values.service.port -}}
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: {{ include "zcm-tpl.fullname" . }}
+  name: {{ include "zcm-tpl.name" . }}
   labels:
     {{- include "zcm-tpl.labels" . | nindent 4 }}
   annotations:
@@ -21,7 +21,7 @@ spec:
         paths:
         {{- range .Values.ingress.path }}
         - backend:
-            serviceName: {{ include "zcm-tpl.fullname" . }}
+            serviceName: {{ include "zcm-tpl.name" . }}
             servicePort: {{ .Values.service.port }}
           path: {{ .externalPath }}
         {{- end }}
