@@ -1,4 +1,5 @@
-fullnameOverride: oss-od-web-rc
+nameOverride: ""
+fullnameOverride: ""
 
 service:
   type: ClusterIP
@@ -6,7 +7,7 @@ service:
 
 ingress:
   enabled: true
-  host: whalecloud.cluster1.labs.tmf.codes
+  host: dev.lumos.hyperoptic.com
   annotations:
     - rewritePath: rewrite /oss/bc/od_web/appInfo/status(.*)$ /opb/appInfo/status$1 break;
     - rewritePath: rewrite /oss/static/oss_core/od(.*)$ /opb/appInfo/status$1 break;
