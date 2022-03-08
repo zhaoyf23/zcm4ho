@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: {{ include "zcm-tpl.fullname" . }}
+  name: {{ .Values.fullnameOverride }}
   labels:
     {{- include "zcm-tpl.labels" . | nindent 4 }}
   annotations:
@@ -18,7 +18,7 @@ spec:
         paths:
         {{- range .Values.ingress.path }}
         - backend:
-            serviceName: {{ include "zcm-tpl.fullname" . }}
+            serviceName: {{ .Values.fullnameOverride }}
             servicePort: {{ .Values.service.port }}
           path: {{ .externalPath }}
         {{- end }}
