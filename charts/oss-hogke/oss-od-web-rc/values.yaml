@@ -5,6 +5,7 @@ service:
   port: 8080
 
 ingress:
+  enabled: true
   host: whalecloud.cluster1.labs.tmf.codes
   annotations:
     - rewritePath: rewrite /oss/bc/od_web/appInfo/status(.*)$ /opb/appInfo/status$1 break;
