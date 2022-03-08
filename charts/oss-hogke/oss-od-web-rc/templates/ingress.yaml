@@ -1,4 +1,11 @@
+{{- if .Values.ingress.enabled -}}
+  {{- $fullName := include "zcm-tpl.fullname" . -}}
+  {{- $svcPort := .Values.service.port -}}
+  {{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
 apiVersion: networking.k8s.io/v1beta1
+  {{- else -}}
+apiVersion: extensions/v1beta1
+  {{- end }}
 kind: Ingress
 metadata:
   name: {{ include "zcm-tpl.fullname" . }}
@@ -22,3 +29,4 @@ spec:
             servicePort: {{ .Values.service.port }}
           path: {{ .externalPath }}
         {{- end }}
+  {{- end }}

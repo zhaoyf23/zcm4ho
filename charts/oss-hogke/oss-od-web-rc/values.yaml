@@ -1,5 +1,8 @@
-global:
-  fullnameOverride: oss-od-web-rc
+fullnameOverride: oss-od-web-rc
+
+service:
+  type: ClusterIP
+  port: 8080
 
 ingress:
   host: whalecloud.cluster1.labs.tmf.codes
