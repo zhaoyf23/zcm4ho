@@ -1,12 +1,12 @@
 {{- if .Values.ingress.enabled -}}
-  {{- $fullName := include "oss-od-web-rc.name" . -}}
+  {{- $fullName := include "zcm-tpl.name" . -}}
   {{- $svcPort := .Values.service.port -}}
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: {{ $fullName }}
   labels:
-    {{- include "oss-od-web-rc.labels" . | nindent 4 }}
+    {{- include "zcm-tpl.labels" . | nindent 4 }}
   annotations:
     kubernetes.io/ingress.class: "nginx"
     nginx.ingress.kubernetes.io/proxy-body-size: "1024M"
