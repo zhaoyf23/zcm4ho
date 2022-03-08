@@ -2,7 +2,7 @@
 Expand the name of the chart.
 */}}
 {{- define "zcm-tpl.name" -}}
-{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
+{{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
