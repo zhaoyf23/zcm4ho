@@ -46,6 +46,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 Selector labels
 */}}
 {{- define "zcm-tpl.selectorLabels" -}}
-app.kubernetes.io/name: {{ .Values.global.fullnameOverride }}
-app: {{ .Values.global.fullnameOverride }}
+app.kubernetes.io/name: {{ include "zcm-tpl.name" . }}
+app: {{ include "zcm-tpl.name" . }}
+{{- end }}
+
+{{/*
+Create the name of the service account to use
+*/}}
+{{- define "zcm-tpl.serviceAccountName" -}}
+{{- if .Values.serviceAccount.create }}
+{{- default (include "zcm-tpl.fullname" .) .Values.serviceAccount.name }}
+{{- else }}
+{{- default "default" .Values.serviceAccount.name }}
+{{- end }}
 {{- end }}
