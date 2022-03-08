@@ -1,28 +1,41 @@
 {{- if .Values.ingress.enabled -}}
-  {{- $fullName := include "zcm-tpl.name" . -}}
-  {{- $svcPort := .Values.service.port -}}
+{{- $fullName := include "oss-od-web-rc.fullname" . -}}
+{{- $svcPort := .Values.service.port -}}
+{{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
 apiVersion: networking.k8s.io/v1beta1
+{{- else -}}
+apiVersion: extensions/v1beta1
+{{- end }}
 kind: Ingress
 metadata:
-  name: {{ include "zcm-tpl.name" . }}
+  name: {{ $fullName }}
   labels:
-    {{- include "zcm-tpl.labels" . | nindent 4 }}
+    {{- include "oss-od-web-rc.labels" . | nindent 4 }}
+  {{- with .Values.ingress.annotations }}
   annotations:
-    kubernetes.io/ingress.class: "nginx"
-    nginx.ingress.kubernetes.io/proxy-body-size: "1024M"
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      {{- range .Values.ingress.annotations }}
-      {{- toYaml .rewritePath | nindent 6 }}
-      {{- end }}
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
+  {{- if .Values.ingress.tls }}
+  tls:
+    {{- range .Values.ingress.tls }}
+    - hosts:
+        {{- range .hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .secretName }}
+    {{- end }}
+  {{- end }}
   rules:
-    - host: {{ .Values.ingress.host }}
+    {{- range .Values.ingress.hosts }}
+    - host: {{ .host | quote }}
       http:
         paths:
-        {{- range .Values.ingress.path }}
-        - backend:
-            serviceName: {{ include "zcm-tpl.name" . }}
-            servicePort: {{ .Values.service.port }}
-          path: {{ .externalPath }}
-        {{- end }}
+          {{- range .paths }}
+          - path: {{ .path }}
+            backend:
+              serviceName: {{ $fullName }}
+              servicePort: {{ $svcPort }}
+          {{- end }}
+    {{- end }}
   {{- end }}
