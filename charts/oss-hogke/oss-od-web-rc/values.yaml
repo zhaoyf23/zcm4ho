@@ -1,5 +1,4 @@
-
-fullnameOverride: cpc-cbec-product
+fullnameOverride: oss-od-web-rc
 
 ingress:
   host: whalecloud.cluster1.labs.tmf.codes
