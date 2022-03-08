@@ -1,4 +1,5 @@
-fullnameOverride: oss-od-web-rc
+global:
+  fullnameOverride: oss-od-web-rc
 
 ingress:
   host: whalecloud.cluster1.labs.tmf.codes
