@@ -5,7 +5,7 @@
 ## Overrides for generated resource names
 # See templates/_helpers.tpl
 # nameOverride:
- fullnameOverride: ingress-nginx-gke
+# fullnameOverride:
 
 ## Labels to apply to all resources
 ##
@@ -69,7 +69,7 @@ controller:
   # -- Process Ingress objects without ingressClass annotation/ingressClassName field
   # Overrides value for --watch-ingress-without-class flag of the controller binary
   # Defaults to false
-  watchIngressWithoutClass: true
+  watchIngressWithoutClass: false
 
   # -- Process IngressClass per name (additionally as per spec.controller).
   ingressClassByName: false
@@ -188,7 +188,7 @@ controller:
   #         name: secret-resource
 
   # -- Use a `DaemonSet` or `Deployment`
-  kind: DaemonSet
+  kind: Deployment
 
   # -- Annotations to be added to the controller Deployment or DaemonSet
   ##
@@ -288,7 +288,6 @@ controller:
   ##
   nodeSelector:
     kubernetes.io/os: linux
-    cloud.google.com/gke-nodepool: business-node
 
   ## Liveness and readiness probe values
   ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
