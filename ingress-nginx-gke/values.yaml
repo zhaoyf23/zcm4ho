@@ -188,7 +188,7 @@ controller:
   #         name: secret-resource
 
   # -- Use a `DaemonSet` or `Deployment`
-  kind: Deployment
+  kind: DaemonSet
 
   # -- Annotations to be added to the controller Deployment or DaemonSet
   ##
@@ -825,6 +825,7 @@ defaultBackend:
   ##
   nodeSelector:
     kubernetes.io/os: linux
+    cloud.google.com/gke-nodepool: business-node
 
   # -- Annotations to be added to default backend pods
   ##
