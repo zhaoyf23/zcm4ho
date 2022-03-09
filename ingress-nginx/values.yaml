@@ -188,7 +188,7 @@ controller:
   #         name: secret-resource
 
   # -- Use a `DaemonSet` or `Deployment`
-  kind: Deployment
+  kind: DaemonSet
 
   # -- Annotations to be added to the controller Deployment or DaemonSet
   ##
@@ -288,6 +288,7 @@ controller:
   ##
   nodeSelector:
     kubernetes.io/os: linux
+    cloud.google.com/gke-nodepool: business-node
 
   ## Liveness and readiness probe values
   ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
