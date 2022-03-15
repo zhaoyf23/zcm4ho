@@ -826,7 +826,7 @@ defaultBackend:
   ##
   nodeSelector:
     kubernetes.io/os: linux
-    cloud.google.com/gke-nodepool: business-node
+    cloud.google.com/gke-nodepool: default-pool
 
   # -- Annotations to be added to default backend pods
   ##
