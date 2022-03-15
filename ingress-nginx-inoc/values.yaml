@@ -288,7 +288,7 @@ controller:
   ##
   nodeSelector:
     kubernetes.io/os: linux
-    cloud.google.com/gke-nodepool: business-node
+    cloud.google.com/gke-nodepool: default-pool
 
   ## Liveness and readiness probe values
   ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes

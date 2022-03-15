@@ -18,7 +18,7 @@ keywords:
 kubeVersion: '>=1.19.0-0'
 maintainers:
 - name: ChiefAlexander
-name: ingress-nginx-gke
+name: ingress-nginx-inoc
 sources:
 - https://github.com/kubernetes/ingress-nginx
 type: application
