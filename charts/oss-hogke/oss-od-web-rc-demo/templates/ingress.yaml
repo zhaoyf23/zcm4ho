@@ -1,6 +1,4 @@
 {{- if .Values.ingress.enabled -}}
-#  {{- $fullName := include "zcm-tpl.name" . -}}
-#  {{- $svcPort := .Values.service.port -}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -13,10 +11,10 @@ metadata:
     kubernetes.io/ingress.class: "gce"
     kubernetes.io/ingress.global-static-ip-name: "gke-ip"
     nginx.ingress.kubernetes.io/proxy-body-size: "1024M"
-#    nginx.ingress.kubernetes.io/configuration-snippet: |
-#      {{- range .Values.ingress.annotations }}
-#      {{- toYaml .rewritePath | nindent 6 }}
-#      {{- end }}
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      {{- range .Values.ingress.annotations }}
+      {{- toYaml .rewritePath | nindent 6 }}
+      {{- end }}
 spec:
   rules:
   - http:
