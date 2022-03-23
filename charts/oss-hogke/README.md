@@ -1,4 +1,4 @@
-# oss applications integration to ingress
+# oss applications integration to ingress                      --version 1.2
 ## Prerequisites
 
 The installation assumes the following:
@@ -13,36 +13,85 @@ The installation assumes the following:
 
 ```
 oss-hogke
-└── oss-od-web-rc
+└── gke-lumos
     ├── Chart.yaml
     ├── templates
     │   ├── _helpers.tpl
     │   ├── ingress.yaml
     │   └── NOTES.txt
     └── values.yaml
-
 ```
-`oss-hogke` is the parent directory, under which multiple subdirectories are stored in parallel, and each directory corresponds to an applied ingress rule. If there are 30 applications on the project, 30 subdirectories need to be listed here.
+`oss-hogke` is the parent directory. There is a chart named `gke-lumos` is used for managing ingress rules.
 
 ## Maintenance
-If you need to add an ingress rule applying `oss-im-edesign-rc`, copy `oss-im-edesign-rc` as a new directory named `oss-im-edesign-rc`, and update the following files in turn:
-### 1.Chart.yaml
-`name`: application name, here is `oss-im-edesign-rc`.
-### 2.values.yaml
-`service.port`: container port, here is `8080`
-`ingress.host`: external domain host, here is `dev.lumos.hyperoptic.com`
-`ingres.annotations`: ingress annotations, format is `- rewritePath: MappingPath(.*)$ WebRoot$1`. If there are multiple rules, configure them in sequence. Here is
+If you need to add an ingress rule applying `demo2`, update the following files in turn:
+### 1.values.yaml
+Copy the following part as another parameter.
+#### Before Updating:
+```
+ingress:
+  enabled: true
+  host: gke.lumos.hyperoptic.com
+  apps:
+  - name: oss-od-web-rc
+    port: 8080
+    annotations:
+      - rewritePath: rewrite /oss/bc/od_web/appInfo/status(.*)$ /opb/appInfo/status$1 break;
+      - rewritePath: rewrite /oss/static/oss_core/od(.*)$ /oss_core/od$1 break;
+      - rewritePath: rewrite /oss/oss_core/od(.*)$ /oss_core/od$1 break;
+    path:
+      - externalPath: /oss/bc/od_web/appInfo/status
+      - externalPath: /oss/static/oss_core/od
+      - externalPath: /oss/oss_core/od
+    pathType: Prefix
+```
+#### After Updating:
+```
+ingress:
+  enabled: true
+  host: gke.lumos.hyperoptic.com
+  apps:
+  - name: oss-od-web-rc
+    port: 8080
+    annotations:
+      - rewritePath: rewrite /oss/bc/od_web/appInfo/status(.*)$ /opb/appInfo/status$1 break;
+      - rewritePath: rewrite /oss/static/oss_core/od(.*)$ /oss_core/od$1 break;
+      - rewritePath: rewrite /oss/oss_core/od(.*)$ /oss_core/od$1 break;
+    path:
+      - externalPath: /oss/bc/od_web/appInfo/status
+      - externalPath: /oss/static/oss_core/od
+      - externalPath: /oss/oss_core/od
+    pathType: Prefix
+  - name: demo2
+    port: 8080
+    annotations:
+      - rewritePath: rewrite /aaa/bbb/ccc(.*)$ /AAA/BBB/CCC$1 break;
+      - rewritePath: rewrite /ddd/eee/fff(.*)$ /DDD/EEE/FFF$1 break;
+      - rewritePath: rewrite /ggg/hhh/iii(.*)$ /GGG/HHH/III$1 break;
+    path:
+      - externalPath: /aaa/bbb/ccc
+      - externalPath: /ddd/eee/fff
+      - externalPath: /ggg/hhh/iii
+    pathType: Prefix
+```
+Description for each parameter:
+`ingress.enabled`: default value: `true`.
+`ingress.host`: external domain host, here is `gke.lumos.hyperoptic.com`.
+`ingress.apps`: Display the forwarding rules of each micro service in the form of array.
+`ingress.apps.annotations`: ingress annotations, format is `- rewritePath: MappingPath(.*)$ WebRoot$1`. If there are multiple rules, configure them in sequence.
+Here is
 ```
 - rewritePath: rewrite /oss/edesign(.*)$ /edesign$1
 - rewritePath: rewrite /oss/bc/im_edesign/appInfo/status(.*)$ /opb/appInfo/status$1
 - rewritePath: rewrite /oss/auth(.*)$ /auth$1
 ```
-`ingress.path`: ingress path, format is `- externalPath: 匹配路径`. If there are multiple rules, configure them in sequence. Here is
+`ingress.apps.path`: ingress path, format is `- externalPath: matchPath`. If there are multiple rules, configure them in sequence. Here is
 ```
 - externalPath: /oss/edesign
 - externalPath: /oss/bc/im_edesign/appInfo/status
 - externalPath: /oss/auth
 ```
+`ingress.pathType`: path match type, apply `Prefix` as default value.
 
 ## Access Environment
 ### 1. List Release
@@ -51,13 +100,13 @@ helm ls -n hogke
 ```
 ### 2. Add Release
 ```
-helm install oss-im-edesign-rc oss-hogke/oss-im-edesign-rc -n hogke
+helm install gke-lumos oss-hogke/gke-lumos -n hogke
 ```
 ### 3. Upgrade Release
 ```
-helm upgrade oss-im-edesign-rc oss-hogke/oss-im-edesign-rc -n hogke
+helm upgrade gke-lumos oss-hogke/gke-lumos -n hogke
 ```
 ### 4. Remove Release
 ```
-helm uninstall oss-im-edesign-rc oss-hogke/oss-im-edesign-rc -n hogke
+helm uninstall gke-lumos -n hogke
 ```
