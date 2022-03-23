@@ -1,0 +1,35 @@
+{{- if .Values.ingress.enabled -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "zcm-tpl.fullname" . }}
+  labels:
+    {{- include "zcm-tpl.labels" . | nindent 4 }}
+  annotations:
+    networking.gke.io/managed-certificates: "managed-gke-cert"
+    kubernetes.io/ingress.allow-http: "false"
+    kubernetes.io/ingress.class: "gce"
+    kubernetes.io/ingress.global-static-ip-name: "gke-ip"
+    nginx.ingress.kubernetes.io/proxy-body-size: "1024M"
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      {{- range $index, $apps := .Values.ingress.apps }}
+      {{- range $index, $annotations := $apps.annotations }}
+      {{- toYaml $annotations.rewritePath | nindent 6 }}
+      {{- end }}
+      {{- end }}
+spec:
+  rules:
+  - http:
+      paths:
+      {{- range $index, $apps := .Values.ingress.apps }}
+      {{- range $index, $path := $apps.path }}
+      - backend:
+          service:
+            name: {{ $apps.name }}
+            port:
+              number: {{ $apps.port }}
+        path: {{ $path.externalPath }}
+        pathType: {{ $apps.pathType }}
+      {{- end }}
+      {{- end }}
+  {{- end }}
