@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    cloud.google.com/neg: '{"ingress":true}'
+    service.alpha.kubernetes.io/app-protocols: '{"helloweb-tls":"HTTPS"}'
+  labels:
+    app: hello
+  name: helloweb-backend
+  namespace: test
+  resourceVersion: "147084774"
+  uid: 3aa0c215-d305-4271-b416-408348fab5bb
+spec:
+  ports:
+    - name: http-8080
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    zcm-app: oss-od-web-rc
+  type: NodePort
