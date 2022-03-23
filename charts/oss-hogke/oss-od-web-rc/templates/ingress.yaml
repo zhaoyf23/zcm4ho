@@ -18,16 +18,15 @@ metadata:
       {{- end }}
 spec:
   rules:
-    - host: {{ .Values.ingress.host }}
-      http:
-        paths:
-        {{- range .Values.ingress.path }}
-        - pathType: ImplementationSpecific
-          backend:
-            service:
-              name: {{ $fullName }}
-              port:
-                number: {{ $svcPort }}
-          path: {{ .externalPath }}
-        {{- end }}
+  - http:
+      paths:
+      {{- range .Values.ingress.path }}
+      - backend:
+          service:
+            name: {{ $fullName }}
+            port:
+              number: {{ $svcPort }}
+        path: {{ .externalPath }}
+        pathType: ImplementationSpecific
+      {{- end }}
   {{- end }}
