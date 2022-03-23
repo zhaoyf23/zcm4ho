@@ -12,8 +12,10 @@ metadata:
     kubernetes.io/ingress.global-static-ip-name: "gke-ip"
     nginx.ingress.kubernetes.io/proxy-body-size: "1024M"
     nginx.ingress.kubernetes.io/configuration-snippet: |
-      {{- range .Values.ingress.annotations }}
-      {{- toYaml .rewritePath | nindent 6 }}
+      {{- range $index, $apps := .Values.ingress.apps }}
+      {{- range $index, $annotations := $apps.annotations }}
+      {{- toYaml $annotations.rewritePath | nindent 6 }}
+      {{- end }}
       {{- end }}
 spec:
   rules:
