@@ -20,8 +20,8 @@ spec:
   - http:
       paths:
       {{- range .Values.ingress.apps }}
-      {{- $name := .Values.ingress.enable -}}
-      {{- $port := .Values.ingress.enable -}}
+      {{- $name := .Values.ingress.enabled -}}
+      {{- $port := .Values.ingress.enabled -}}
       - backend:
           service:
             name: {{ $name }}
