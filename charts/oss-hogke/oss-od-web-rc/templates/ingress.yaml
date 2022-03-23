@@ -22,7 +22,8 @@ spec:
       http:
         paths:
         {{- range .Values.ingress.path }}
-        - backend:
+        - pathType: ImplementationSpecific
+          backend:
             service:
               name: {{ $fullName }}
               port:
