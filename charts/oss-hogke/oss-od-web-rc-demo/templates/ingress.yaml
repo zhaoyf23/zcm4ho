@@ -25,9 +25,6 @@ spec:
             name: { .name }}
             port:
               number: { .port }}
-      {{- range .path }}
-        path: { .externalPath }}
-      {{- end }}
         pathType: ImplementationSpecific
       {{- end }}
   {{- end }}
