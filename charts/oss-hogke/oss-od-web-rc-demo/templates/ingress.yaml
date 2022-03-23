@@ -22,7 +22,6 @@ spec:
       {{- range $index, $topping := .Values.ingress.apps }}
       {{- $name := $topping.name -}}
       {{- $port := $topping.port -}}
-      {{- $externalPath := $topping2.externalPath -}}
       - backend:
           service:
             name: {{ $name }}
