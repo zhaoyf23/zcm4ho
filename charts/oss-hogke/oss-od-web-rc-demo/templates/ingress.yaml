@@ -27,7 +27,7 @@ spec:
             port:
               number: {{ $apps.port }}
         path: {{ $path.externalPath }}
-        pathType: ImplementationSpecific
+        pathType: {{ $apps.pathType }}
       {{- end }}
       {{- end }}
   {{- end }}

@@ -15,3 +15,4 @@ ingress:
       - externalPath: /oss/bc/od_web/appInfo/status
       - externalPath: /oss/static/oss_core/od
       - externalPath: /oss/oss_core/od
+    pathType: Prefix
