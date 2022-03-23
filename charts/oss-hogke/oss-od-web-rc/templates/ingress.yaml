@@ -8,6 +8,7 @@ metadata:
   labels:
     {{- include "zcm-tpl.labels" . | nindent 4 }}
   annotations:
+    networking.gke.io/managed-certificates: "managed-gke-cert"
     kubernetes.io/ingress.allow-http: "false"
     kubernetes.io/ingress.class: "nginx"
     nginx.ingress.kubernetes.io/proxy-body-size: "1024M"
@@ -16,16 +17,16 @@ metadata:
       {{- toYaml .rewritePath | nindent 6 }}
       {{- end }}
 spec:
-  tls:
-    - secretName: hyperoptic-tls
   rules:
     - host: {{ .Values.ingress.host }}
       http:
         paths:
         {{- range .Values.ingress.path }}
         - backend:
-            serviceName: {{ $fullName }}
-            servicePort: {{ $svcPort }}
+            service:
+              name: {{ $fullName }}
+              port:
+                number: {{ $svcPort }}
           path: {{ .externalPath }}
         {{- end }}
   {{- end }}

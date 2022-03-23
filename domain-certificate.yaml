@@ -1,0 +1,8 @@
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: managed-gke-cert
+  namespace: hogke
+spec:
+  domains:
+    - gke.lumos.hyperoptic.com
