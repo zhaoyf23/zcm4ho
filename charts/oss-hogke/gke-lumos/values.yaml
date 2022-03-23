@@ -16,14 +16,14 @@ ingress:
       - externalPath: /oss/static/oss_core/od
       - externalPath: /oss/oss_core/od
     pathType: Prefix
-  - name: demo2
-    port: 8080
-    annotations:
-      - rewritePath: rewrite /aaa/bbb/ccc(.*)$ /AAA/BBB/CCC$1 break;
-      - rewritePath: rewrite /ddd/eee/fff(.*)$ /DDD/EEE/FFF$1 break;
-      - rewritePath: rewrite /ggg/hhh/iii(.*)$ /GGG/HHH/III$1 break;
-    path:
-      - externalPath: /aaa/bbb/ccc
-      - externalPath: /ddd/eee/fff
-      - externalPath: /ggg/hhh/iii
-    pathType: Prefix
+#  - name: demo2
+#    port: 8080
+#    annotations:
+#      - rewritePath: rewrite /aaa/bbb/ccc(.*)$ /AAA/BBB/CCC$1 break;
+#      - rewritePath: rewrite /ddd/eee/fff(.*)$ /DDD/EEE/FFF$1 break;
+#      - rewritePath: rewrite /ggg/hhh/iii(.*)$ /GGG/HHH/III$1 break;
+#    path:
+#      - externalPath: /aaa/bbb/ccc
+#      - externalPath: /ddd/eee/fff
+#      - externalPath: /ggg/hhh/iii
+#    pathType: Prefix
