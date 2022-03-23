@@ -7,7 +7,7 @@ metadata:
     {{- include "zcm-tpl.labels" . | nindent 4 }}
   annotations:
     networking.gke.io/managed-certificates: "managed-gke-cert"
-    kubernetes.io/ingress.allow-http: "false"
+    kubernetes.io/ingress.allow-http: "true"
     kubernetes.io/ingress.class: "gce"
     kubernetes.io/ingress.global-static-ip-name: "gke-ip"
     nginx.ingress.kubernetes.io/proxy-body-size: "1024M"
