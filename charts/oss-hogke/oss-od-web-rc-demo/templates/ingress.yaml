@@ -11,10 +11,6 @@ metadata:
     kubernetes.io/ingress.class: "gce"
     kubernetes.io/ingress.global-static-ip-name: "gke-ip"
     nginx.ingress.kubernetes.io/proxy-body-size: "1024M"
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      {{- range .Values.ingress.annotations }}
-      {{- toYaml .rewritePath | nindent 6 }}
-      {{- end }}
 spec:
   rules:
   - http:
@@ -25,6 +21,9 @@ spec:
             name: { .name }}
             port:
               number: { .port }}
+      {{- range .path }}
+        path: { .externalPath }}
+      {{- end }}
         pathType: ImplementationSpecific
       {{- end }}
   {{- end }}
