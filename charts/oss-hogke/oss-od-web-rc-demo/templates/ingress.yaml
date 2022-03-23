@@ -20,11 +20,14 @@ spec:
   - http:
       paths:
       {{- range $index, $topping := .Values.ingress.apps }}
+      {{- range $index, $topping2 := $topping }}
       - backend:
           service:
             name: {{ $topping.name }}
             port:
               number: {{ $topping.port }}
+        path: {{ $topping2.externalPath }}
         pathType: ImplementationSpecific
+      {{- end }}
       {{- end }}
   {{- end }}
