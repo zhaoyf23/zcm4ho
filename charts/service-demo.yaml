@@ -4,12 +4,8 @@ metadata:
   annotations:
     cloud.google.com/neg: '{"ingress":true}'
     service.alpha.kubernetes.io/app-protocols: '{"helloweb-tls":"HTTPS"}'
-  labels:
-    app: hello
-  name: helloweb-backend
-  namespace: test
-  resourceVersion: "147084774"
-  uid: 3aa0c215-d305-4271-b416-408348fab5bb
+  name: oss-od-web-rc
+  namespace: hogke
 spec:
   ports:
     - name: http-8080
