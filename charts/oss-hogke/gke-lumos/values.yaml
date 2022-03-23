@@ -5,7 +5,7 @@ ingress:
   enabled: true
   host: gke.lumos.hyperoptic.com
   apps:
-  - name: oss-od-web-rc-demo
+  - name: oss-od-web-rc
     port: 8080
     annotations:
       - rewritePath: rewrite /oss/bc/od_web/appInfo/status(.*)$ /opb/appInfo/status$1 break;
