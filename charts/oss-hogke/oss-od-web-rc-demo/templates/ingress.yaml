@@ -29,5 +29,4 @@ spec:
               number: {{ $port }}
         pathType: ImplementationSpecific
       {{- end }}
-      {{- end }}
   {{- end }}
