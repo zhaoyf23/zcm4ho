@@ -20,7 +20,7 @@ spec:
   - http:
       paths:
       {{- range $index, $topping := .Values.ingress.apps }}
-      {{- range $index, $topping2 := $topping }}
+      {{- range $index, $topping2 := $topping.path }}
       - backend:
           service:
             name: {{ $topping.name }}
