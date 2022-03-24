@@ -92,5 +92,5 @@ dnsPolicy: ClusterFirst
 clusterIP: None
 
 secret:
-  mysqlrootpasswd: aW5vY0AxMjM=
+  mysqlrootpasswd: e2NpcGhlcn17cnNhfVIvOFRyZkNaVm9QMFRua0YvZ3RyN0orbW5NY2Z0bEtIMnUzaHVubjZNaW89
   type: Opaque

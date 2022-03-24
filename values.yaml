@@ -50,3 +50,27 @@ zcm-image:
 zcm-ssc:
   image:
     tag: C_20211025142438
+zcm-baas:
+  image:
+    tag: C_20210527093743
+nms-activemq:
+  image:
+    tag: C_20210927190250
+nms-grafana:
+  image:
+    tag: C_20210927190334-7.2.1
+nms-influxdb:
+  image:
+    tag: C_20210927190249-1.7.3
+nms-kapacitor:
+  image:
+    tag: C_20211101163858
+nms-metrics:
+  image:
+    tag: C_20210927190314
+nms--monitor:
+  image:
+    tag: C_20211013152857
+zcm-dialing:
+  image:
+    tag: C_20211011160324
