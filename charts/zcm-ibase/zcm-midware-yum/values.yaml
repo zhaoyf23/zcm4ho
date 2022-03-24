@@ -64,13 +64,11 @@ volumes:
     hostPath:
       path: /etc/localtime
   - name: collectd
-    hostPath:
-      path: /root/collectd
+    emptyDir: {}
   - name: supervisord
     emptyDir: {}
   - name: repos
-    hostPath:
-      path: /repos
+    emptyDir: {}
 
 cm:
   - name: zcm-timezone
