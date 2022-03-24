@@ -68,7 +68,7 @@ nms-kapacitor:
 nms-metrics:
   image:
     tag: C_20210927190314
-nms--monitor:
+nms-monitor:
   image:
     tag: C_20211013152857
 zcm-dialing:

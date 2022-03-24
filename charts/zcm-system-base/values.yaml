@@ -6,5 +6,5 @@ global:
   repository: 10.45.80.1
   namespace: zcm9
   nodeSelector:
-    aik: zcm9
+    cloud.google.com/gke-nodepool: zcm-pool
   architecture: ha

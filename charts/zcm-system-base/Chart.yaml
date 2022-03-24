@@ -28,9 +28,6 @@ dependencies:
   - name: zcm-mysql
     version: 0.1.0
     repository: https://zhaoyf23.github.io/helm-chart-zcm/
-  - name: zcm-mysql-slave
-    version: 0.1.0
-    repository: https://zhaoyf23.github.io/helm-chart-zcm/
   - name: zcm-redis
     version: 0.1.0
     repository: https://zhaoyf23.github.io/helm-chart-zcm/
