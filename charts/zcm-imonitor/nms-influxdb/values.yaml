@@ -77,8 +77,7 @@ volumes:
     hostPath:
       path: /tmp/zlogs
   - name: influxdb
-    hostPath:
-      path: /zpaasssd/zcm/influxdata
+    emptyDir: {}
 
 cm:
   - name: zcm-timezone

@@ -1,0 +1,1729 @@
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-28T07:16:36Z"
+    name: opb-bsdk9-rc
+    namespace: hogke
+    resourceVersion: "134487981"
+    uid: 1fcfa633-d864-48b1-baa3-ca7aa22ce35c
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: opb-bsdk9-rc
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-28T07:16:37Z"
+    name: opb-core-rc
+    namespace: hogke
+    resourceVersion: "134488014"
+    uid: 95ef5eab-f111-4f9a-aa7f-be3ddf9dceb6
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: opb-core-rc
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-17T09:50:31Z"
+    name: oss-edn-iserver-stateless
+    namespace: hogke
+    resourceVersion: "128083004"
+    uid: ee6522d1-9479-4d2c-93f9-1e4f75680e82
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: oss-edn-iserver-stateless
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-03-15T06:31:32Z"
+    name: oss-eureka
+    namespace: hogke
+    resourceVersion: "145777228"
+    uid: 0ff79ae7-e90b-45df-a7d1-29fe4a1cd879
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-9010
+        port: 9010
+        protocol: TCP
+        targetPort: 9010
+    selector:
+      zcm-app: oss-eureka
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:43Z"
+    name: oss-foa-task-ci
+    namespace: hogke
+    resourceVersion: "128517142"
+    uid: ca95c96a-6ff8-475e-b2b0-40cf54279151
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: oss-foa-task-ci
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:41Z"
+    name: oss-im-dis-rc
+    namespace: hogke
+    resourceVersion: "128517000"
+    uid: 5bb6705d-b29e-4922-9d86-180cd0c16565
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: oss-im-dis-rc
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:39Z"
+    name: oss-im-dis-web-rc
+    namespace: hogke
+    resourceVersion: "128516840"
+    uid: 47e43160-9911-40d5-a067-22b4ca974e85
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: oss-im-dis-web-rc
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-03-08T06:59:53Z"
+    name: oss-im-edesign-rc
+    namespace: hogke
+    resourceVersion: "139829512"
+    uid: 4ac348dc-90a8-4dde-939a-b15ca06024f9
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: oss-im-edesign-rc
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:39Z"
+    name: oss-im-edesign-web-rc
+    namespace: hogke
+    resourceVersion: "128516873"
+    uid: 588f4508-1dde-4749-adf8-bf4e07d10067
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: oss-im-edesign-web-rc
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:47Z"
+    name: oss-im-mgt-rc
+    namespace: hogke
+    resourceVersion: "128517592"
+    uid: b959d241-2d26-46cb-b037-e1e6d3db4dcb
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: oss-im-mgt-rc
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:48Z"
+    name: oss-im-mgt-web-rc
+    namespace: hogke
+    resourceVersion: "128517675"
+    uid: 4b37d8c4-1b65-4a7c-acce-02390ca35c37
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: oss-im-mgt-web-rc
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:43Z"
+    name: oss-im-ra-rc
+    namespace: hogke
+    resourceVersion: "128517200"
+    uid: aa7a0ab5-e791-4176-bb18-14d8ec2f6b13
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: oss-im-ra-rc
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:43Z"
+    name: oss-im-ra-web-rc
+    namespace: hogke
+    resourceVersion: "128517230"
+    uid: f9e12fcf-0b26-4740-969a-3a9c24ec6b06
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: oss-im-ra-web-rc
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-03-01T09:13:58Z"
+    name: oss-inms-comm
+    namespace: hogke
+    resourceVersion: "135136177"
+    uid: 4c13ad97-2eb3-453e-8936-23bbfa939110
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: oss-inms-comm
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-03-16T06:53:36Z"
+    name: oss-inms-fmtask
+    namespace: hogke
+    resourceVersion: "146747092"
+    uid: ab9f3331-8227-4588-815a-5aefc418c747
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: oss-inms-fmtask
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-03-16T06:53:37Z"
+    name: oss-inms-fmweb
+    namespace: hogke
+    resourceVersion: "146747118"
+    uid: 66cd342e-b559-4a0a-9482-7e3a823e0f91
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: oss-inms-fmweb
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-03-01T08:45:43Z"
+    name: oss-inms-pmtask
+    namespace: hogke
+    resourceVersion: "135123691"
+    uid: b2347051-89eb-416e-a240-f1d1e21e45db
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: oss-inms-pmtask
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-03-01T08:39:53Z"
+    name: oss-inms-pmweb
+    namespace: hogke
+    resourceVersion: "135120896"
+    uid: 955008c4-0299-46c0-9142-18c79fad8e64
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: oss-inms-pmweb
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-03-16T06:53:37Z"
+    name: oss-inms-ucpagent
+    namespace: hogke
+    resourceVersion: "146747176"
+    uid: 8eeb7b79-2f02-42b7-a706-133d4a7218f2
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-10081
+        port: 10081
+        protocol: TCP
+        targetPort: 10081
+      - name: http-10061
+        port: 10061
+        protocol: TCP
+        targetPort: 10061
+      - name: http-10082
+        port: 10082
+        protocol: TCP
+        targetPort: 10082
+      - name: http-10083
+        port: 10083
+        protocol: TCP
+        targetPort: 10083
+      - name: http-13172
+        port: 13172
+        protocol: TCP
+        targetPort: 13172
+      - name: http-9011
+        port: 9011
+        protocol: TCP
+        targetPort: 9011
+    selector:
+      zcm-app: oss-inms-ucpagent
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-03-21T08:54:51Z"
+    name: oss-inms-ucpweb
+    namespace: hogke
+    resourceVersion: "151331826"
+    uid: 76f6b447-51b7-4ae9-9900-364c1e6a2039
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: oss-inms-ucpweb
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:47Z"
+    name: oss-iom-ap
+    namespace: hogke
+    resourceVersion: "128517622"
+    uid: 10c4f1ed-b004-4a2d-abf0-1ec2e5aacf8c
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8310
+        port: 8310
+        protocol: TCP
+        targetPort: 8310
+    selector:
+      zcm-app: oss-iom-ap
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:36Z"
+    name: oss-iom-web
+    namespace: hogke
+    resourceVersion: "128516576"
+    uid: 4252a0ca-ee0b-46bc-bf46-d4c29eaa670e
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-80
+        port: 80
+        protocol: TCP
+        targetPort: 80
+    selector:
+      zcm-app: oss-iom-web
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:42Z"
+    name: oss-iom-web-server
+    namespace: hogke
+    resourceVersion: "128517061"
+    uid: 2d8a5ee3-484b-429f-b225-72eadc07103e
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8229
+        port: 8229
+        protocol: TCP
+        targetPort: 8229
+    selector:
+      zcm-app: oss-iom-web-server
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:37Z"
+    name: oss-isap-async-serv
+    namespace: hogke
+    resourceVersion: "128516685"
+    uid: dbc6f099-0a0b-4a4e-a96e-ccdff6a8c65d
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8500
+        port: 8500
+        protocol: TCP
+        targetPort: 8500
+    selector:
+      zcm-app: oss-isap-async-serv
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:50Z"
+    name: oss-isap-evt
+    namespace: hogke
+    resourceVersion: "128517841"
+    uid: 1c773100-c916-44bb-8149-226094488d67
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8420
+        port: 8420
+        protocol: TCP
+        targetPort: 8420
+    selector:
+      zcm-app: oss-isap-evt
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:44Z"
+    name: oss-isap-file-reader
+    namespace: hogke
+    resourceVersion: "128517309"
+    uid: 5fa74c63-9ecd-466d-b30a-93a00dd1924f
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8450
+        port: 8450
+        protocol: TCP
+        targetPort: 8450
+    selector:
+      zcm-app: oss-isap-file-reader
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:45Z"
+    name: oss-isap-nai
+    namespace: hogke
+    resourceVersion: "128517384"
+    uid: ec690126-fde1-4810-b786-2af645b38105
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8410
+        port: 8410
+        protocol: TCP
+        targetPort: 8410
+    selector:
+      zcm-app: oss-isap-nai
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:47Z"
+    name: oss-isap-npi
+    namespace: hogke
+    resourceVersion: "128517530"
+    uid: 56383785-dd1d-468a-b850-6236b6160079
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8440
+        port: 8440
+        protocol: TCP
+        targetPort: 8440
+    selector:
+      zcm-app: oss-isap-npi
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:36Z"
+    name: oss-isap-npi-query
+    namespace: hogke
+    resourceVersion: "128516526"
+    uid: a40c7533-a7b7-4926-bc21-b24e09fb21da
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8440
+        port: 8440
+        protocol: TCP
+        targetPort: 8440
+    selector:
+      zcm-app: oss-isap-npi-query
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:48Z"
+    name: oss-isap-odc
+    namespace: hogke
+    resourceVersion: "128517648"
+    uid: 751d6ab2-737a-4bff-9039-05284e58d3c2
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8430
+        port: 8430
+        protocol: TCP
+        targetPort: 8430
+    selector:
+      zcm-app: oss-isap-odc
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:38Z"
+    name: oss-isap-odc-job
+    namespace: hogke
+    resourceVersion: "128516764"
+    uid: dee43e38-3807-402d-8ed6-78d868322e26
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8460
+        port: 8460
+        protocol: TCP
+        targetPort: 8460
+    selector:
+      zcm-app: oss-isap-odc-job
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:49Z"
+    name: oss-isap-persistence
+    namespace: hogke
+    resourceVersion: "128517815"
+    uid: a8535024-5bf2-47b4-b5f6-9cf6536bbd71
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8510
+        port: 8510
+        protocol: TCP
+        targetPort: 8510
+    selector:
+      zcm-app: oss-isap-persistence
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:49Z"
+    name: oss-isap-provider
+    namespace: hogke
+    resourceVersion: "128517752"
+    uid: 76ff2ce1-3ac2-451e-9d14-9e50936ba22c
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8001
+        port: 8001
+        protocol: TCP
+        targetPort: 8001
+    selector:
+      zcm-app: oss-isap-provider
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:49Z"
+    name: oss-isap-simulate-ne
+    namespace: hogke
+    resourceVersion: "128517781"
+    uid: 4b54f39d-8775-4442-b432-2521860bf519
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8900
+        port: 8900
+        protocol: TCP
+        targetPort: 8900
+    selector:
+      zcm-app: oss-isap-simulate-ne
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:37Z"
+    name: oss-isap-web
+    namespace: hogke
+    resourceVersion: "128516626"
+    uid: ba371ac5-9aee-4460-8e9c-6feceb8ecc50
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: oss-isap-web
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:49Z"
+    name: oss-moa-ci
+    namespace: hogke
+    resourceVersion: "128517725"
+    uid: 14c56f10-d5c7-438e-8dfd-73e953f41d64
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: oss-moa-ci
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:37Z"
+    name: oss-moa-push-ci
+    namespace: hogke
+    resourceVersion: "128516651"
+    uid: e88d3fe9-a574-43f4-9f58-d3fc3281bcf9
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: oss-moa-push-ci
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:45Z"
+    name: oss-od-acpt-rc
+    namespace: hogke
+    resourceVersion: "128517417"
+    uid: c2b7e330-fbb0-408d-afb8-b0caa28a07f6
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: oss-od-acpt-rc
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:38Z"
+    name: oss-od-app-rc
+    namespace: hogke
+    resourceVersion: "128516788"
+    uid: 8ec860f6-1a89-49ac-8c87-f261ea3e19d4
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: oss-od-app-rc
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:42Z"
+    name: oss-od-async-rc
+    namespace: hogke
+    resourceVersion: "128517090"
+    uid: 563a57fc-ab20-4778-a2ba-2019b0502970
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: oss-od-async-rc
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:40Z"
+    name: oss-od-decomp-rc
+    namespace: hogke
+    resourceVersion: "128516899"
+    uid: 9d95be39-7a36-4505-a935-d4ba9bee27af
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: oss-od-decomp-rc
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+      cloud.google.com/neg-status: '{"network_endpoint_groups":{"8080":"k8s1-a7cefce8-hogke-oss-od-web-rc-8080-8daccd9b"},"zones":["europe-west2-a"]}'
+    creationTimestamp: "2022-02-18T03:30:35Z"
+    name: oss-od-web-rc
+    namespace: hogke
+    resourceVersion: "153010820"
+    uid: d2bee086-bc8c-4ae2-ace2-f7ae25fed6a1
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: oss-od-web-rc
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:43Z"
+    name: oss-ofm-acpt
+    namespace: hogke
+    resourceVersion: "128517168"
+    uid: 4d2281a0-ae21-41ec-b9dc-1d6ce5afad16
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: oss-ofm-acpt
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:40Z"
+    name: oss-ofm-api
+    namespace: hogke
+    resourceVersion: "128516924"
+    uid: 40e1c76b-6ac3-4f1d-82a0-ae29dbb62ee0
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: oss-ofm-api
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:42Z"
+    name: oss-ofm-async
+    namespace: hogke
+    resourceVersion: "128517118"
+    uid: 8bff5ee0-0821-46e2-960c-a4d63fa7a031
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: oss-ofm-async
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:50Z"
+    name: oss-ofm-disp
+    namespace: hogke
+    resourceVersion: "128517872"
+    uid: ef46af12-1b5e-4718-9187-be779053744a
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: oss-ofm-disp
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:41Z"
+    name: oss-ofm-web
+    namespace: hogke
+    resourceVersion: "128516974"
+    uid: 18f75145-543b-4122-956a-e65fc7c4b00c
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: oss-ofm-web
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-03-01T08:06:40Z"
+    name: oss-pot-ci
+    namespace: hogke
+    resourceVersion: "135105085"
+    uid: 17b50187-d0ed-49bf-a5ca-89baf8a5c7e5
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: oss-pot-ci
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:38Z"
+    name: oss-scm-app-rc
+    namespace: hogke
+    resourceVersion: "128516737"
+    uid: a96e7442-79cb-4428-966e-b2d2be71af50
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: oss-scm-app-rc
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:39Z"
+    name: oss-scm-web-rc
+    namespace: hogke
+    resourceVersion: "128516813"
+    uid: 774c8ab4-d4a0-40aa-b52a-9fb439c43c2f
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: oss-scm-web-rc
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:46Z"
+    name: oss-srv-app-rc
+    namespace: hogke
+    resourceVersion: "128517504"
+    uid: 02f0cbfc-68ec-4a70-b398-65d00736fee4
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: oss-srv-app-rc
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:44Z"
+    name: oss-srv-async-rc
+    namespace: hogke
+    resourceVersion: "128517335"
+    uid: 4f6070d0-18fa-4f24-93ed-4c31440772c0
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: oss-srv-async-rc
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:44Z"
+    name: oss-srv-web-rc
+    namespace: hogke
+    resourceVersion: "128517256"
+    uid: 4ddd3484-195d-4fd9-8a77-01eabcb32f84
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: oss-srv-web-rc
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:44Z"
+    name: oss-wfm-acpt-ci
+    namespace: hogke
+    resourceVersion: "128517284"
+    uid: 34964206-d963-4232-83c0-2bbd9e0e5a2b
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: oss-wfm-acpt-ci
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:38Z"
+    name: oss-wfm-api-ci
+    namespace: hogke
+    resourceVersion: "128516712"
+    uid: 07ee96d1-485a-44c6-ae71-8c76e5d2b5ab
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: oss-wfm-api-ci
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:46Z"
+    name: oss-wfm-async-ci
+    namespace: hogke
+    resourceVersion: "128517443"
+    uid: 38db861f-442e-4073-b3cc-d57b4afa2e7f
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: oss-wfm-async-ci
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:46Z"
+    name: oss-wfm-disp-ci
+    namespace: hogke
+    resourceVersion: "128517480"
+    uid: d2f8b3fa-dd7a-4bca-9169-8b8ef46c7231
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: oss-wfm-disp-ci
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:48Z"
+    name: oss-wfm-task-ci
+    namespace: hogke
+    resourceVersion: "128517700"
+    uid: 6dd87474-1947-4ed6-b59f-7ca3acfa5825
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: oss-wfm-task-ci
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:41Z"
+    name: uosflow-manager-core
+    namespace: hogke
+    resourceVersion: "128517035"
+    uid: c11ac935-3afd-4634-a34f-02fcbd0c8fef
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: uosflow-manager-core
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:40Z"
+    name: uosflow-server-core
+    namespace: hogke
+    resourceVersion: "128516949"
+    uid: d4bba35a-709e-472e-b825-473c6e01dc77
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: uosflow-server-core
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2022-02-18T03:30:36Z"
+    name: wfm-web-ci
+    namespace: hogke
+    resourceVersion: "128516550"
+    uid: c912ef08-b957-4d52-8dc1-1ade4b8e2ddb
+  spec:
+    clusterIP: None
+    clusterIPs:
+      - None
+    ipFamilies:
+      - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+      - name: http-8080
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      zcm-app: wfm-web-ci
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}

@@ -3,8 +3,8 @@
 # Declare variables to be passed into your templates.
 
 global:
-  repository: 10.45.80.1
+  repository: europe-west2-docker.pkg.dev/wct-oss-dev
   namespace: zcm9
   nodeSelector:
-    aik: zcm9
+    cloud.google.com/gke-nodepool: zcm-pool
   architecture: ha

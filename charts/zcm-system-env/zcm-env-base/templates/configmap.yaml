@@ -12,8 +12,8 @@ data:
   ZCM_HARBOR: 10.45.80.82:52800
   ZCM_HARBOR_PROJECT: zcm9
   ZCM_MYSQL_PORT: "3306"
-  ZCM_MYSQL_USER: root
-  ZCM_MYSQL_VIP: 10.62.64.3
+  ZCM_MYSQL_USER: zcm
+  ZCM_MYSQL_VIP: 10.176.112.31
   ZCM_NGINX_PORT: "52000"
   ZCM_NGINX_SSL_PORT: "25000"
   ZCM_PORTAL_PORT: "52060"
@@ -38,7 +38,7 @@ data:
   ZCM_MIDWARE_ZCACHE_REST: "http://172.16.17.145:8301/api/syncZCacheCluster/"
   ZCM_MIDWARE_ZMQ_REST: "http://172.16.17.145:8601/api/syncZmqCluster/"
   ZCM_MIDWARE_ZDAAS_REST: "http://172.16.17.145:8901/api/syncZdaasCluster/"
-  PORTAL_JDBC_URL: "jdbc:mysql://10.62.64.3:3306/zcm_portal_9?zeroDateTimeBehavior=convertToNull&allowMultiQueries=true"
-  ANSIBLE_JDBC_URL: "10.62.64.3:3306:zcm_zcamp"
-  ZCAMP_JDBC_URL: "jdbc:mysql://10.62.64.3:3306/zcm_zcamp"
-  ZCM_MIDDLE_MANAGER_DB: "jdbc:mysql://10.62.64.3:3306/zcm_middleware"
+  PORTAL_JDBC_URL: "jdbc:mysql://10.176.112.31:3306/zcm_portal_9?zeroDateTimeBehavior=convertToNull&allowMultiQueries=true"
+  ANSIBLE_JDBC_URL: "10.176.112.31:3306:zcm_zcamp"
+  ZCAMP_JDBC_URL: "jdbc:mysql://10.176.112.31:3306/zcm_zcamp"
+  ZCM_MIDDLE_MANAGER_DB: "jdbc:mysql://10.176.112.31:3306/zcm_middleware"
