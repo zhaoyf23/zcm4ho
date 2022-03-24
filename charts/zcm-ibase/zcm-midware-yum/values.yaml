@@ -67,8 +67,7 @@ volumes:
     hostPath:
       path: /root/collectd
   - name: supervisord
-    hostPath:
-      path: /root/supervisord
+    emptyDir: {}
   - name: repos
     hostPath:
       path: /repos

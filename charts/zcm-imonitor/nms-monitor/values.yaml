@@ -222,8 +222,7 @@ volumes:
     hostPath:
       path: /tmp/zlogs
   - name: node-exporter-config
-    hostPath:
-      path: /zcm/prometheus/targets
+    emptyDir: {}
 
 cm:
   - name: properties
