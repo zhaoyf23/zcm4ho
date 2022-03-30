@@ -3,7 +3,7 @@ kind: Service
 metadata:
   annotations:
     cloud.google.com/neg: '{"ingress":true}'
-    service.alpha.kubernetes.io/app-protocols: '{"http-8080":"HTTP2"}'
+    service.alpha.kubernetes.io/app-protocols: '{"http-8080":"HTTP"}'
   name: oss-od-web-rc
   namespace: hogke
 spec:
