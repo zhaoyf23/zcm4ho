@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    cloud.google.com/neg: '{"ingress":true}'
+    service.alpha.kubernetes.io/app-protocols: '{"http-8080":"HTTP"}'
+  name: oss-ofm-async
+  namespace: hogke
+spec:
+  ports:
+    - name: http-8080
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    zcm-app: oss-ofm-async
+  type: NodePort
