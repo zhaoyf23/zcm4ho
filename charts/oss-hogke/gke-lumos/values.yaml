@@ -33,3 +33,10 @@ ingress:
       - externalPath: /oss/bc/pot/appInfo/status
       - externalPath: /oss/styles/img/9plus
     pathType: Prefix
+  - name: oss-ofm-async
+    port: 8080
+    annotations:
+      - rewritePath: rewrite /oss/bc/ofm_async/appInfo/status(.*)$ /opb/appInfo/status$1 break;
+    path:
+      - externalPath: /oss/bc/ofm_async/appInfo/status
+    pathType: Prefix
