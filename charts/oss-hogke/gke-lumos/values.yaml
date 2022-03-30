@@ -20,7 +20,7 @@ ingress:
     port: 8080
     annotations:
       - rewritePath: rewrite /oss/azure/ad/user(.*)$ /portal/azure/ad/user$1 break;
-      - rewritePath: rewrite /(.*)$ /$1 break;
+      - rewritePath: rewrite /oss(.*)$ /$1 break;
       - rewritePath: rewrite /oss/opb/priv/spec/queryOpbsPrivActionRel(.*)$ /opb/priv/spec/queryOpbsPrivActionRel/$1 break;
       - rewritePath: rewrite /oss/styles/img/x(.*)$ /styles/img/x/$1 break;
       - rewritePath: rewrite /oss/bc/pot/appInfo/status(.*)$ /opb/appInfo/status/$1 break;
