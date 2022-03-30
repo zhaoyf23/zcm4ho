@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    cloud.google.com/neg: '{"ingress":true}'
+    service.alpha.kubernetes.io/app-protocols: '{"http-8080":"HTTP2"}'
+  name: oss-pot-ci-NodePort
+  namespace: hogke
+spec:
+  ports:
+    - name: http-8080
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    zcm-app: oss-pot-ci
+  type: NodePort
