@@ -15,6 +15,7 @@ ingress:
       - externalPath: /oss/bc/od_web/appInfo/status
       - externalPath: /oss/static/oss_core/od
       - externalPath: /oss/oss_core/od
+    pathType: Prefix
   - name: oss-pot-ci
     port: 8080
     annotations:
@@ -31,6 +32,4 @@ ingress:
       - externalPath: /oss/styles/img/x
       - externalPath: /oss/bc/pot/appInfo/status
       - externalPath: /oss/styles/img/9plus
-
-
     pathType: Prefix
