@@ -4,7 +4,7 @@ metadata:
   annotations:
     cloud.google.com/neg: '{"ingress":true}'
     service.alpha.kubernetes.io/app-protocols: '{"http-8080":"HTTP2"}'
-  name: oss-pot-ci-np
+  name: oss-pot-ci
   namespace: hogke
 spec:
   ports:
