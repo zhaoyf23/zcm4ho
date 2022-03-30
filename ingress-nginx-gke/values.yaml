@@ -151,7 +151,7 @@ controller:
     namespace: ""
     # -- When scope.enabled == false, instead of watching all namespaces, we watching namespaces whose labels
     # only match with namespaceSelector. Format like foo=bar. Defaults to empty, means watching all namespaces.
-    namespaceSelector: ""
+    namespaceSelector: "hogke"
 
   # -- Allows customization of the configmap / nginx-configmap namespace; defaults to $(POD_NAMESPACE)
   configMapNamespace: ""
