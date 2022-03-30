@@ -5,4 +5,4 @@ metadata:
   namespace: hogke
 spec:
   domains:
-    - gke.lumos.hyperoptic.com
+    - oss-gke.lumos.hyperoptic.com

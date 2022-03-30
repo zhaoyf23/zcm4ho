@@ -31,7 +31,7 @@ Copy the following part as another parameter.
 ```
 ingress:
   enabled: true
-  host: gke.lumos.hyperoptic.com
+  host: oss-gke.lumos.hyperoptic.com
   apps:
   - name: oss-od-web-rc
     port: 8080
@@ -49,7 +49,7 @@ ingress:
 ```
 ingress:
   enabled: true
-  host: gke.lumos.hyperoptic.com
+  host: oss-gke.lumos.hyperoptic.com
   apps:
   - name: oss-od-web-rc
     port: 8080
@@ -76,7 +76,7 @@ ingress:
 ```
 Description for each parameter:
 `ingress.enabled`: default value: `true`.
-`ingress.host`: external domain host, here is `gke.lumos.hyperoptic.com`.
+`ingress.host`: external domain host, here is `oss-gke.lumos.hyperoptic.com`.
 `ingress.apps`: Display the forwarding rules of each micro service in the form of array.
 `ingress.apps.annotations`: ingress annotations, format is `- rewritePath: MappingPath(.*)$ WebRoot$1`. If there are multiple rules, configure them in sequence.
 Here is

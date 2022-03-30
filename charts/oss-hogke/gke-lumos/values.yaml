@@ -3,7 +3,7 @@ fullnameOverride: ""
 
 ingress:
   enabled: true
-  host: gke.lumos.hyperoptic.com
+  host: oss-gke.lumos.hyperoptic.com
   apps:
   - name: oss-od-web-rc
     port: 8080
