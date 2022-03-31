@@ -8,8 +8,8 @@ ingress:
   - name: oss-ofm-async
     port: 8080
     annotations:
-      - rewritePath: rewrite /(.*)$ /$1 break;
+      - rewritePath: rewrite /oss/bc/ofm_async/appInfo/status(.*)$ /opb/appInfo/status$1 break;
     path:
-      - externalPath: /
+      - externalPath: /oss/bc/ofm_async/appInfo/status
     pathType: Prefix
 
