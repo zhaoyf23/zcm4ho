@@ -5,38 +5,11 @@ ingress:
   enabled: true
   host: oss-gke.lumos.hyperoptic.com
   apps:
-  - name: oss-od-web-rc
-    port: 8080
-    annotations:
-      - rewritePath: rewrite /oss/bc/od_web/appInfo/status(.*)$ /opb/appInfo/status$1 break;
-      - rewritePath: rewrite /oss/static/oss_core/od(.*)$ /oss_core/od$1 break;
-      - rewritePath: rewrite /oss/oss_core/od(.*)$ /oss_core/od$1 break;
-    path:
-      - externalPath: /oss/bc/od_web/appInfo/status
-      - externalPath: /oss/static/oss_core/od
-      - externalPath: /oss/oss_core/od
-    pathType: ImplementationSpecific
   - name: oss-ofm-async
     port: 8080
     annotations:
       - rewritePath: rewrite /oss/bc/ofm_async/appInfo/status(.*)$ /opb/appInfo/status$1 break;
     path:
       - externalPath: /oss/bc/ofm_async/appInfo/status
-    pathType: ImplementationSpecific
-  - name: oss-pot-ci
-    port: 8080
-    annotations:
-      - rewritePath: rewrite /oss/azure/ad/user(.*)$ /portal/azure/ad/user$1 break;
-      - rewritePath: rewrite /oss/opb/priv/spec/queryOpbsPrivActionRel(.*)$ /opb/priv/spec/queryOpbsPrivActionRel/$1 break;
-      - rewritePath: rewrite /oss/styles/img/x(.*)$ /styles/img/x$1 break;
-      - rewritePath: rewrite /oss/bc/pot/appInfo/status(.*)$ /opb/appInfo/status$1 break;
-      - rewritePath: rewrite /oss/styles/img/9plus(.*)$ /styles/img/9plus$1 break;
-      - rewritePath: rewrite /oss/(.*)$ /$1 break;
-    path:
-      - externalPath: /oss/azure/ad/user
-      - externalPath: /oss/opb/priv/spec/queryOpbsPrivActionRel
-      - externalPath: /oss/styles/img/x
-      - externalPath: /oss/bc/pot/appInfo/status
-      - externalPath: /oss/styles/img/9plus
-      - externalPath: /oss
-    pathType: ImplementationSpecific
+    pathType: Prefix
+
