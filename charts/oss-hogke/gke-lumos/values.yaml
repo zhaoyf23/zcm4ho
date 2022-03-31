@@ -15,14 +15,14 @@ ingress:
       - externalPath: /oss/bc/od_web/appInfo/status
       - externalPath: /oss/static/oss_core/od
       - externalPath: /oss/oss_core/od
-    pathType: ImplementationSpecific
+    pathType: Exact
   - name: oss-ofm-async
     port: 8080
     annotations:
       - rewritePath: rewrite /oss/bc/ofm_async/appInfo/status(.*)$ /opb/appInfo/status$1 break;
     path:
       - externalPath: /oss/bc/ofm_async/appInfo/status
-    pathType: ImplementationSpecific
+    pathType: Exact
   - name: oss-pot-ci
     port: 8080
     annotations:
@@ -39,4 +39,4 @@ ingress:
       - externalPath: /oss/bc/pot/appInfo/status
       - externalPath: /oss/styles/img/9plus
       - externalPath: /oss
-    pathType: ImplementationSpecific
+    pathType: Exact
