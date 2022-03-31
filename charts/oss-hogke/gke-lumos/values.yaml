@@ -16,27 +16,27 @@ ingress:
       - externalPath: /oss/static/oss_core/od
       - externalPath: /oss/oss_core/od
     pathType: Prefix
-  - name: oss-pot-ci
-    port: 8080
-    annotations:
-      - rewritePath: rewrite /oss/azure/ad/user(.*)$ /portal/azure/ad/user$1 break;
-      - rewritePath: rewrite /oss(.*)$ /$1 break;
-      - rewritePath: rewrite /oss/opb/priv/spec/queryOpbsPrivActionRel(.*)$ /opb/priv/spec/queryOpbsPrivActionRel/$1 break;
-      - rewritePath: rewrite /oss/styles/img/x(.*)$ /styles/img/x/$1 break;
-      - rewritePath: rewrite /oss/bc/pot/appInfo/status(.*)$ /opb/appInfo/status/$1 break;
-      - rewritePath: rewrite /oss/styles/img/9plus(.*)$ /styles/img/9plus/$1 break;
-    path:
-      - externalPath: /oss/azure/ad/user
-      - externalPath: /oss
-      - externalPath: /oss/opb/priv/spec/queryOpbsPrivActionRel
-      - externalPath: /oss/styles/img/x
-      - externalPath: /oss/bc/pot/appInfo/status
-      - externalPath: /oss/styles/img/9plus
-    pathType: Prefix
   - name: oss-ofm-async
     port: 8080
     annotations:
       - rewritePath: rewrite /oss/bc/ofm_async/appInfo/status(.*)$ /opb/appInfo/status$1 break;
     path:
       - externalPath: /oss/bc/ofm_async/appInfo/status
+    pathType: Prefix
+  - name: oss-pot-ci
+    port: 8080
+    annotations:
+      - rewritePath: rewrite /oss/azure/ad/user(.*)$ /portal/azure/ad/user$1 break;
+      - rewritePath: rewrite /oss/opb/priv/spec/queryOpbsPrivActionRel(.*)$ /opb/priv/spec/queryOpbsPrivActionRel/$1 break;
+      - rewritePath: rewrite /oss/styles/img/x(.*)$ /styles/img/x$1 break;
+      - rewritePath: rewrite /oss/bc/pot/appInfo/status(.*)$ /opb/appInfo/status$1 break;
+      - rewritePath: rewrite /oss/styles/img/9plus(.*)$ /styles/img/9plus$1 break;
+      - rewritePath: rewrite /oss/(.*)$ /$1 break;
+    path:
+      - externalPath: /oss/azure/ad/user
+      - externalPath: /oss/opb/priv/spec/queryOpbsPrivActionRel
+      - externalPath: /oss/styles/img/x
+      - externalPath: /oss/bc/pot/appInfo/status
+      - externalPath: /oss/styles/img/9plus
+      - externalPath: /oss
     pathType: Prefix
