@@ -1,4 +1,4 @@
-# oss applications integration to ingress                      --version 1.2
+# GKE integration                      --version 1.3
 ## Prerequisites
 
 The installation assumes the following:
@@ -35,10 +35,6 @@ ingress:
   apps:
   - name: oss-od-web-rc
     port: 8080
-    annotations:
-      - rewritePath: rewrite /oss/bc/od_web/appInfo/status(.*)$ /opb/appInfo/status$1 break;
-      - rewritePath: rewrite /oss/static/oss_core/od(.*)$ /oss_core/od$1 break;
-      - rewritePath: rewrite /oss/oss_core/od(.*)$ /oss_core/od$1 break;
     path:
       - externalPath: /oss/bc/od_web/appInfo/status
       - externalPath: /oss/static/oss_core/od
@@ -53,10 +49,6 @@ ingress:
   apps:
   - name: oss-od-web-rc
     port: 8080
-    annotations:
-      - rewritePath: rewrite /oss/bc/od_web/appInfo/status(.*)$ /opb/appInfo/status$1 break;
-      - rewritePath: rewrite /oss/static/oss_core/od(.*)$ /oss_core/od$1 break;
-      - rewritePath: rewrite /oss/oss_core/od(.*)$ /oss_core/od$1 break;
     path:
       - externalPath: /oss/bc/od_web/appInfo/status
       - externalPath: /oss/static/oss_core/od
@@ -64,10 +56,6 @@ ingress:
     pathType: Prefix
   - name: demo2
     port: 8080
-    annotations:
-      - rewritePath: rewrite /aaa/bbb/ccc(.*)$ /AAA/BBB/CCC$1 break;
-      - rewritePath: rewrite /ddd/eee/fff(.*)$ /DDD/EEE/FFF$1 break;
-      - rewritePath: rewrite /ggg/hhh/iii(.*)$ /GGG/HHH/III$1 break;
     path:
       - externalPath: /aaa/bbb/ccc
       - externalPath: /ddd/eee/fff
@@ -78,14 +66,8 @@ Description for each parameter:
 `ingress.enabled`: default value: `true`.
 `ingress.host`: external domain host, here is `oss-gke.lumos.hyperoptic.com`.
 `ingress.apps`: Display the forwarding rules of each micro service in the form of array.
-`ingress.apps.annotations`: ingress annotations, format is `- rewritePath: MappingPath(.*)$ WebRoot$1`. If there are multiple rules, configure them in sequence.
-Here is
-```
-- rewritePath: rewrite /oss/edesign(.*)$ /edesign$1
-- rewritePath: rewrite /oss/bc/im_edesign/appInfo/status(.*)$ /opb/appInfo/status$1
-- rewritePath: rewrite /oss/auth(.*)$ /auth$1
-```
 `ingress.apps.path`: ingress path, format is `- externalPath: matchPath`. If there are multiple rules, configure them in sequence. Here is
+
 ```
 - externalPath: /oss/edesign
 - externalPath: /oss/bc/im_edesign/appInfo/status
