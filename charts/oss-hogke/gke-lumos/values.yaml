@@ -11,5 +11,5 @@ ingress:
       - rewritePath: rewrite /oss/bc/ofm_async/appInfo/status/(.*)$ /opb/appInfo/status/$1 break;
     path:
       - externalPath: /oss/bc/ofm_async/appInfo/status/
-    pathType: Prefix
+    pathType: ImplementationSpecific
 
