@@ -18,11 +18,6 @@ metadata:
       {{- end }}
       {{- end }}
 spec:
-  defaultBackend:
-    service:
-      name: oss-ofm-async
-      port:
-        number: 8080
   rules:
   - http:
       paths:
