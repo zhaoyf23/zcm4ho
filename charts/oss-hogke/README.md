@@ -133,41 +133,6 @@ kubectl delete -f service-appname.yaml
 kubectl apply -f service-appname.yaml
 ```
 
-## Load Balancing Rules Management
-
-Because of gce ingress cannot fulfill rewrite-target function, we find a second solution, that is Load Balancing Rules Configuration.
-
-Click [Load balancing](https://console.cloud.google.com/net-services/loadbalancing/list/loadBalancers?project=wct-oss-dev)
-
-Click `LOAD BALANCERS` [k8s2-um-b0n05971-hogke-gke-lumos-t1riqq4x](https://console.cloud.google.com/net-services/loadbalancing/details/http/k8s2-um-b0n05971-hogke-gke-lumos-t1riqq4x?project=wct-oss-dev)
-
-![image-20220331211459228](C:\Users\zhaoy\AppData\Roaming\Typora\typora-user-images\image-20220331211459228.png)
-
-Click `EDIT`
-
-https://console.cloud.google.com/net-services/loadbalancing/details/http/k8s2-um-b0n05971-hogke-gke-lumos-t1riqq4x?project=wct-oss-dev
-
-![image-20220331211607866](C:\Users\zhaoy\AppData\Roaming\Typora\typora-user-images\image-20220331211607866.png)
-
-1. In the left column of the screen, click **Host and path rules**.
-2. Select **Advanced host and path rule (URL redirect, URL rewrite)**.
-3. Click the row that contains the non-default path rule, in this case, the row that has an asterisk (`*`) for all hosts.
-4. Click the pencil icon edit for the specified row of apps.
-5. Under **Action**, select default **Route traffic to a single backend**.
-6. Click **Add-on action (URL rewrite)**.
-7. Leave **Host rewrite** blank.
-8. Under **Path prefix rewrite**, enter rewrite path prefix.
-9. Under **Backend**, select default backend.
-10. Click **Save**.
-11. Click **Done**.
-12. If everything looks correct, click **Update** to update your HTTP load balancer. It will cost several minutes to finish updating.
-
-https://console.cloud.google.com/net-services/loadbalancing/edit/http/k8s2-um-b0n05971-hogke-gke-lumos-t1riqq4x?project=wct-oss-dev
-
-![image-20220331211958053](C:\Users\zhaoy\AppData\Roaming\Typora\typora-user-images\image-20220331211958053.png)
-
-![image-20220331212206469](C:\Users\zhaoy\AppData\Roaming\Typora\typora-user-images\image-20220331212206469.png)
-
 ## Health Checks Management
 
 Click [Health checks](https://console.cloud.google.com/compute/healthChecks?project=wct-oss-dev)
@@ -214,3 +179,47 @@ The method to test `Port` and `Request path`: execute below commands in containe
 
 ![image-20220331220718892](C:\Users\zhaoy\AppData\Roaming\Typora\typora-user-images\image-20220331220718892.png)
 
+## Load Balancing Rules Management
+
+Because of gce ingress cannot fulfill rewrite-target function, we find a second solution, that is Load Balancing Rules Configuration.
+
+Click [Load balancing](https://console.cloud.google.com/net-services/loadbalancing/list/loadBalancers?project=wct-oss-dev)
+
+Click `LOAD BALANCERS` [k8s2-um-b0n05971-hogke-gke-lumos-t1riqq4x](https://console.cloud.google.com/net-services/loadbalancing/details/http/k8s2-um-b0n05971-hogke-gke-lumos-t1riqq4x?project=wct-oss-dev)
+
+![image-20220331211459228](C:\Users\zhaoy\AppData\Roaming\Typora\typora-user-images\image-20220331211459228.png)
+
+Click `EDIT`
+
+https://console.cloud.google.com/net-services/loadbalancing/details/http/k8s2-um-b0n05971-hogke-gke-lumos-t1riqq4x?project=wct-oss-dev
+
+![image-20220331211607866](C:\Users\zhaoy\AppData\Roaming\Typora\typora-user-images\image-20220331211607866.png)
+
+1. In the left column of the screen, click **Host and path rules**.
+2. Select **Advanced host and path rule (URL redirect, URL rewrite)**.
+3. Click the row that contains the non-default path rule, in this case, the row that has an asterisk (`*`) for all hosts.
+4. Click the pencil icon edit for the specified row of apps.
+5. Under **Action**, select default **Route traffic to a single backend**.
+6. Click **Add-on action (URL rewrite)**.
+7. Leave **Host rewrite** blank.
+8. Under **Path prefix rewrite**, enter rewrite path prefix.
+9. Under **Backend**, select default backend.
+10. Click **Save**.
+11. Click **Done**.
+12. If everything looks correct, click **Update** to update your HTTP load balancer. It will cost several minutes to finish updating.
+
+https://console.cloud.google.com/net-services/loadbalancing/edit/http/k8s2-um-b0n05971-hogke-gke-lumos-t1riqq4x?project=wct-oss-dev
+
+![image-20220331211958053](C:\Users\zhaoy\AppData\Roaming\Typora\typora-user-images\image-20220331211958053.png)
+
+![image-20220331212206469](C:\Users\zhaoy\AppData\Roaming\Typora\typora-user-images\image-20220331212206469.png)
+
+## To Test
+
+https://oss-gke.lumos.hyperoptic.com/oss/bc/ofm_async/appInfo/status
+
+or
+
+https://35.241.36.210/oss/bc/ofm_async/appInfo/status
+
+http or https both can work.
