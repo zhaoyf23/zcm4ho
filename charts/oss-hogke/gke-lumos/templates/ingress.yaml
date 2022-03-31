@@ -18,11 +18,6 @@ metadata:
       {{- end }}
       {{- end }}
 spec:
-  defaultBackend:
-    service:
-      name: default-http-backend
-      port:
-        number: 80
   rules:
   - http:
       paths:
