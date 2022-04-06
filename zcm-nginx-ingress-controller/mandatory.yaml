@@ -341,7 +341,7 @@ spec:
               memory: 90Mi
       nodeSelector:
         kubernetes.io/os: linux
-        aik: zcm9
+        cloud.google.com/gke-nodepool: zcm-pool
       serviceAccountName: ingress-nginx
       hostNetwork: true
       terminationGracePeriodSeconds: 60
