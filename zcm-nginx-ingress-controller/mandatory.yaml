@@ -259,7 +259,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: controller
-          image: europe-west2-docker.pkg.dev/ho-dev-env-337400/zcm9/zcm-ingress-nginx-controller:v0.46.0
+          image: europe-west2-docker.pkg.dev/wct-oss-dev/zcm9/zcm-ingress-nginx-controller:v0.46.0
           imagePullPolicy: IfNotPresent
           lifecycle:
             preStop:
@@ -536,7 +536,7 @@ spec:
     spec:
       containers:
         - name: create
-          image: europe-west2-docker.pkg.dev/ho-dev-env-337400/zcm9/kube-webhook-certgen:v1.5.1
+          image: europe-west2-docker.pkg.dev/wct-oss-dev/zcm9/kube-webhook-certgen:v1.5.1
           imagePullPolicy: IfNotPresent
           args:
             - create
@@ -584,7 +584,7 @@ spec:
     spec:
       containers:
         - name: patch
-          image: europe-west2-docker.pkg.dev/ho-dev-env-337400/zcm9/kube-webhook-certgen:v1.5.1
+          image: europe-west2-docker.pkg.dev/wct-oss-dev/zcm9/kube-webhook-certgen:v1.5.1
           imagePullPolicy: IfNotPresent
           args:
             - patch
