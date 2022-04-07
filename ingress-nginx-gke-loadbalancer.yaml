@@ -9,9 +9,9 @@ metadata:
 spec:
   ports:
     - name: http-gateway
-      port: 8002
+      port: 8001
       protocol: TCP
-      targetPort: 8002
+      targetPort: 8001
       nodePort: 32000
     - name: http-ingress
       port: 8002
