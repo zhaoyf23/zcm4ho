@@ -490,7 +490,7 @@ controller:
       - IPv4
 
     ports:
-      http: 8001
+      http: 8002
       https: 443
 
     targetPorts:
