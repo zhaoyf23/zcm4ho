@@ -36,6 +36,7 @@
 - --validating-webhook-certificate={{ .Values.controller.admissionWebhooks.certificate }}
 - --validating-webhook-key={{ .Values.controller.admissionWebhooks.key }}
 {{- end }}
+- --http-port=8001
 {{- if .Values.controller.maxmindLicenseKey }}
 - --maxmind-license-key={{ .Values.controller.maxmindLicenseKey }}
 {{- end }}
