@@ -8,16 +8,21 @@ metadata:
   namespace: hogke
 spec:
   ports:
-    - name: http
+    - name: http-gateway
       port: 8002
       protocol: TCP
       targetPort: 8002
       nodePort: 32000
-    - name: https
+    - name: http-ingress
+      port: 8002
+      protocol: TCP
+      targetPort: 8002
+      nodePort: 32001
+    - name: https-notuse
       port: 443
       protocol: TCP
       targetPort: 443
-      nodePort: 32001
+      nodePort: 32002
   selector:
     cloud.google.com/gke-nodepool: business-node
     app.kubernetes.io/name: ingress-nginx-gke
