@@ -4,7 +4,7 @@ metadata:
   annotations:
     cloud.google.com/load-balancer-type: Internal
     cloud.google.com/neg: '{"ingress":true}'
-  name: ingress-nginx-gke-nodeport
+  name: ingress-nginx-gke-loadbalancer
   namespace: hogke
 spec:
   ports:
