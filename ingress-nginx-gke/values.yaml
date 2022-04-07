@@ -36,7 +36,7 @@ controller:
 
   # -- Configures the ports that the nginx-controller listens on
   containerPort:
-    http: 80
+    http: 8002
     https: 443
 
   # -- Will add custom configuration options to Nginx https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/
