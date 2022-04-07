@@ -8,17 +8,12 @@ metadata:
   namespace: hogke
 spec:
   ports:
-    - name: http-gateway
-      port: 8001
-      protocol: TCP
-      targetPort: 8001
-      nodePort: 32000
-    - name: http-ingress
+    - name: http
       port: 8002
       protocol: TCP
       targetPort: 8002
       nodePort: 32001
-    - name: https-notuse
+    - name: https
       port: 443
       protocol: TCP
       targetPort: 443
