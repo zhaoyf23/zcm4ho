@@ -6,13 +6,10 @@ metadata:
   labels:
     {{- include "zcm-tpl.labels" . | nindent 4 }}
   annotations:
-    nginx.ingress.kubernetes.io/proxy-body-size: "1024M"
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      {{- range $index, $apps := .Values.ingress.apps }}
-      {{- range $index, $annotations := $apps.annotations }}
-      {{- toYaml $annotations.rewritePath | nindent 6 }}
-      {{- end }}
-      {{- end }}
+    networking.gke.io/managed-certificates: "managed-gke-cert"
+    kubernetes.io/ingress.allow-http: "true"
+    kubernetes.io/ingress.class: "gce"
+    kubernetes.io/ingress.global-static-ip-name: "gke-ip"
 spec:
   rules:
   - http:
