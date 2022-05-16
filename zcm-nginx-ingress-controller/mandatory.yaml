@@ -331,10 +331,6 @@ spec:
             - name: webhook-cert
               mountPath: /usr/local/certificates/
               readOnly: true
-            - name: k8s-config
-              mountPath: /zcm/httpfiles/k8s/certs/cluster_k8s-slb/config
-              subPath: config
-              readOnly: true
           resources:
             requests:
               cpu: 100m
@@ -349,9 +345,6 @@ spec:
         - name: webhook-cert
           secret:
             secretName: ingress-nginx-admission
-        - name: k8s-config
-          configMap:
-            name: zcm-k8s-kubeconfig
 ---
 # Source: ingress-nginx/templates/admission-webhooks/validating-webhook.yaml
 # before changing this value, check the required kubernetes version

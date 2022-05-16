@@ -2,75 +2,195 @@ global:
   repository: europe-west2-docker.pkg.dev/wct-oss-dev
   nodeSelector:
     cloud.google.com/gke-nodepool: zcm-pool
-zcm-dingding:
+itracing-flink-standalone:
   image:
-    tag: C_20210927190314
-zcm-midware-yum:
+    tag: "C_20220223164116"
+itracing-hbase:
   image:
-    tag: C_20210927190247
-zcm-portal:
+    tag: "C_20220223164118"
+itracing-hbase-standalone:
   image:
-    tag: C_20211105155538
-mysql:
+    tag: "C_20220223164127"
+zcm-cloudtest:
   image:
-    tag: 5.7.31
-redis:
-  image:
-    tag: 3.2.12
-zcm-zcamp:
-  image:
-    tag: C_20211026110807
-zcm-zcamp-rest-server:
-  image:
-    tag: C_20210927190259
-zcm-ansible:
-  image:
-    tag: C_20210927191848
-zcm-cmdb:
-  image:
-    tag: C_20211110113039
-zcm-tool:
-  image:
-    tag: D_20211022093018
-zcm-application:
-  image:
-    tag: C_20211125153827
+    tag: "C_20220223170450"
 zcm-gateway:
   image:
-    tag: C_20211111104349
+    tag: "C_20220224193227"
+zcache-manager-springboot:
+  image:
+    tag: "C_20220223133650"
+zcm-cicd:
+  image:
+    tag: "C_20220307095523"
+zcm-netshooting:
+  image:
+    tag: "C_20220223113606"
 zcm-service:
   image:
-    tag: C_20211111105147
-zcm-resource:
+    tag: "C_20220309110355"
+itracing-collector:
   image:
-    tag: C_20211014194552
-zcm-image:
+    tag: "C_20220310090901"
+itracing-hadoop:
   image:
-    tag: C_20211109154331
-zcm-ssc:
+    tag: "C_20220223164126"
+itracing-trace-collector-proxy:
   image:
-    tag: C_20211025142438
-zcm-baas:
+    tag: "D_20220124135204"
+itracing-kibana:
   image:
-    tag: C_20210527093743
-nms-activemq:
+    tag: "C_20220316141129"
+zcm-gitea:
   image:
-    tag: C_20210927190250
-nms-grafana:
+    tag: "C_20220223170323"
+zcm-application:
   image:
-    tag: C_20210927190334-7.2.1
+    tag: "C_20220311132739"
+zcm-dingding:
+  image:
+    tag: "C_20220303131530"
 nms-influxdb:
   image:
-    tag: C_20210927190249-1.7.3
-nms-kapacitor:
+    tag: "C_20220223132116-1.7.3"
+zcm-ssc:
   image:
-    tag: C_20211101163858
-nms-metrics:
+    tag: "C_20220310110037"
+itracing-log-pilot:
   image:
-    tag: C_20210927190314
+    tag: "C_20220223164125"
+itracing-log:
+  image:
+    tag: "C_20220224195628"
+zcm-ldapauth:
+  image:
+    tag: "1.1"
+itracing-zookeeper:
+  image:
+    tag: "C_20220223164120"
 nms-monitor:
   image:
-    tag: C_20211013152857
+    tag: "C_20220316155701"
+icanary-web:
+  image:
+    tag: "C_20220310135626"
+zcm-nginx:
+  image:
+    tag: "C_20220303151758"
+zcm-cmdb:
+  image:
+    tag: "C_20220310183207"
+itracing-tuning-web:
+  image:
+    tag: "C_20220223164155"
+nms-kapacitor:
+  image:
+    tag: "C_20220223132145"
+zcm-zcamp:
+  image:
+    tag: "C_20220308092440"
+itracing-front-log:
+  image:
+    tag: "C_20220224200705"
+scp-web:
+  image:
+    tag: "C_20220301162100"
+zcm-cicd-task:
+  image:
+    tag: "C_20220223170400"
+itracing-logstash:
+  image:
+    tag: "C_20220223164121"
+itracing-kafka:
+  image:
+    tag: "C_20220223164137"
+itracing-flink:
+  image:
+    tag: "C_20220223164121"
+nms-activemq:
+  image:
+    tag: "C_20220223132114"
+zcm-resource:
+  image:
+    tag: "C_20220223142949"
+nms-grafana:
+  image:
+    tag: "C_20220223132153-7.2.1"
+zcm-task:
+  image:
+    tag: "C_20220223132155"
 zcm-dialing:
   image:
-    tag: C_20211011160324
+    tag: "C_20220223132153"
+zcm-midware-yum:
+  image:
+    tag: "C_20220223170306"
+zcm-portal:
+  image:
+    tag: "C_20220223142943"
+scp-metric:
+  image:
+    tag: "C_20211019093858"
+zcm-devspace:
+  image:
+    tag: "C_20220307093819"
+zcm-image:
+  image:
+    tag: "C_20220223142954"
+zcm-nexus3:
+  image:
+    tag: "3.30.0"
+itracing-elasticsearch:
+  image:
+    tag: "C_20220223164130"
+zcm-git:
+  image:
+    tag: "C_20220310172244"
+zcm-zcamp-rest-server:
+  image:
+    tag: "C_20220223170335"
+zmq-manager-springboot:
+  image:
+    tag: "C_20220223145010"
+zcm-health-keeper:
+  image:
+    tag: "C_20220223142907"
+itracing-web:
+  image:
+    tag: "C_20220310091024"
+openjdk_java8_ci_mysql:
+  image:
+    tag: "C_20220307140843"
+zcm-ansible:
+  image:
+    tag: "C_20220228104348"
+itracing-esconsole:
+  image:
+    tag: "C_20220223164206"
+nms-idocs:
+  image:
+    tag: "C_20220223132202"
+nms-metrics:
+  image:
+    tag: "C_20220310160136"
+zcm-file-manager:
+  image:
+    tag: "C_20220223142940"
+zcm-tool:
+  image:
+    tag: "C_20220309153737"
+nms-prometheus-scraper:
+  image:
+    tag: "C_20220228135346"
+zcm-k8sproxy:
+  image:
+    tag: "C_20220223142941"
+zcm-cicd-server:
+  image:
+    tag: "C_20220307091250"
+zcm-compact:
+  image:
+    tag: "v1.3.1"
+zcm-cloudtest-agent:
+  image:
+    tag: "C_20220223170432"

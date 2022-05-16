@@ -1,0 +1,27 @@
+kind: HTTPRoute
+apiVersion: gateway.networking.k8s.io/v1alpha2
+metadata:
+  name: oss-ofm-async
+spec:
+  parentRefs:
+    - kind: Gateway
+      name: gateway-oss-ofm-async
+  hostnames:
+    - "oss-gke.lumos.hyperoptic.com"
+  rules:
+#    - backendRefs:
+#        - name: oss-ofm-async
+#          port: 8080
+#    - matches:
+#        - headers:
+#            - name: env
+#              value: canary
+#      backendRefs:
+#        - name: store-v2
+#          port: 8080
+    - matches:
+        - path:
+            value: /opb/appInfo/status
+      backendRefs:
+        - name: oss-ofm-async
+          port: 8080
