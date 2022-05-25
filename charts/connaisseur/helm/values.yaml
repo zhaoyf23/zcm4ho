@@ -158,18 +158,15 @@ validators:
 # is applied. specify if and how images should be validated by which validator via the validator name.
 policy:
   - pattern: "*:*"
-  - pattern: "docker.io/library/*:*"
-    validator: dockerhub-basics
-    with:
-      trust_root: docker-official
-  - pattern: "europe-west2-docker.pkg.dev/wct-oss-dev/hogke/*:*"
+    validator: deny
+  - pattern: "europe-west2-docker.pkg.dev/wct-oss-dev/zcm9/*:*"
     validator: artifact-registry
     with:
       trust_root: google-artifact-registry
-  - pattern: "docker.io/securesystemsengineering/*:*"
-    validator: dockerhub-basics
-    with:
-      trust_root: securesystemsengineering-official
+#  - pattern: "europe-west2-docker.pkg.dev/wct-oss-dev/hogke/*:*"
+#    validator: artifact-registry
+#    with:
+#      trust_root: google-artifact-registry
 
 # in detection mode, deployment will not be denied, but only prompted
 # and logged. this allows testing the functionality without
