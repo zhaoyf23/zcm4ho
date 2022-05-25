@@ -121,7 +121,7 @@ validators:
           d0CA+JOi8H4REuBaWSZ5zPDe468WuOJ6f71E7WFg3CVEVYHuoZt2UYbN/Q==
           -----END PUBLIC KEY-----
   - name: artifact-registry
-    type: consign
+    type: cosign
     trust_roots:
       - name: google-artifact-registry
         key: |
